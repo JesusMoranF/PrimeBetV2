@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const ruletaImg = document.querySelector('.ruleta-imagen-pequena');
     const spinButton = document.querySelector('.btn-spin');
     const statusText = document.getElementById('estado-apuesta');
-    const fichas = document.querySelectorAll('.ficha');
-    const tableroApuestas = document.getElementById('tablero-apuestas'); // Contenedor principal de drop
+    const fichas = document.querySelectorAll('.ficha');
+    const tableroApuestas = document.getElementById('tablero-apuestas'); // Contenedor principal de drop
 
     // El orden de los números en la ruleta europea (para calcular la posición final)
     const ruletaNumbers = [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26];
@@ -71,15 +71,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- UTILERÍAS ---
     
+    // Función para obtener el dinero del DOM (removiendo formato)
     function obtenerDinero() {
-        // Obtenemos el saldo sin formato que se envía desde el backend en Ruleta.handlebars
-        // Nota: Si solo tienes el DOM formateado, debes usar la lógica de reemplazo de texto.
-        // Asumiremos que el saldo sin formato está disponible si recargas la página o que el formatter de abajo es suficiente.
         const dineroTexto = document.getElementById('dinero-disponible').textContent.replace('$', '').trim();
-        const dineroLimpio = dineroTexto.replace(/\./g, '').replace(',', '.');
+        // Limpia separadores de miles (.), reemplaza la coma si existe (aunque tu formato es solo puntos)
+        const dineroLimpio = dineroTexto.replace(/\./g, '').replace(',', '.'); 
         return Number(dineroLimpio); 
     }
 
+    // Función para actualizar el dinero en el DOM con formato
     function actualizarDinero(nuevoMonto) {
         const formatter = new Intl.NumberFormat('es-CL', {
             style: 'currency',
@@ -89,13 +89,15 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('dinero-disponible').textContent = formatter.format(nuevoMonto).replace('USD', '$').trim();
     }
 
+    // Función para limpiar las fichas visuales del tablero
     function limpiarApuestasVisuales() {
+        // Obtenemos todas las celdas dentro del contenedor del tablero
         const zonasApuesta = tableroApuestas.querySelectorAll('td');
         zonasApuesta.forEach(celda => {
             const fichasVisuales = celda.querySelectorAll('.ficha-visual-normal, .ficha-visual-allin');
             fichasVisuales.forEach(ficha => ficha.remove());
         });
-        apuestasActuales = {}; 
+        apuestasActuales = {}; // Reinicia el modelo de datos
     }
     
     // --- DRAG AND DROP HANDLERS ---
@@ -122,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const celda = e.target.closest('td');
         const celdaId = celda ? celda.id : null; 
 
-        // 1. Verificar si es zona válida y si ya hay una ficha
+        // 1. Verificar si es zona válida y si ya hay una ficha (UNA FICHA POR CELDA)
         if (celdaId && MAPEO_APUESTAS[celdaId] && !apuestasActuales[celdaId]) {
             
             let valorApuesta = 0;
@@ -148,25 +150,16 @@ document.addEventListener('DOMContentLoaded', () => {
             // 4. Crear y Mostrar Ficha Visual
             const fichaVisual = document.createElement('div');
             fichaVisual.className = fichaInfo.tipo === 'allin' ? 'ficha-visual-allin' : 'ficha-visual-normal';
-            fichaVisual.innerText = fichaInfo.tipo === 'allin' ? 'ALL IN' : fichaInfo.valor;
+            fichaVisual.innerText = fichaInfo.tipo === 'allin' ? 'A' : fichaInfo.valor; // Usamos 'A' para All In si el valor es largo
             fichaVisual.dataset.valor = valorApuesta; 
             
-            // Estilos CSS rápidos (mejor mover esto a tu archivo style.css)
+            // Estilos de posicionamiento (el CSS principal debe encargarse de la apariencia)
             celda.style.position = 'relative'; 
             fichaVisual.style.position = 'absolute';
             fichaVisual.style.top = '50%';
             fichaVisual.style.left = '50%';
             fichaVisual.style.transform = 'translate(-50%, -50%)';
-            fichaVisual.style.width = '20px'; 
-            fichaVisual.style.height = '20px';
-            fichaVisual.style.borderRadius = '50%';
-            fichaVisual.style.backgroundColor = fichaInfo.tipo === 'allin' ? 'darkred' : 'gold';
-            fichaVisual.style.color = fichaInfo.tipo === 'allin' ? 'white' : 'black';
             fichaVisual.style.zIndex = '100'; 
-            fichaVisual.style.display = 'flex';
-            fichaVisual.style.alignItems = 'center';
-            fichaVisual.style.justifyContent = 'center';
-            fichaVisual.style.fontSize = '8px';
             
             celda.appendChild(fichaVisual);
 
@@ -174,17 +167,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Inicializar eventos de Drag and Drop
+    // Inicializar eventos de Drag and Drop en las fichas
     fichas.forEach(ficha => {
         ficha.addEventListener('dragstart', dragStart);
     });
     
-    // Asumimos que TODAS las celdas (td) dentro del tablero son drop zones:
-    const celdasApuesta = tableroApuestas.querySelectorAll('td');
-    celdasApuesta.forEach(celda => {
-        celda.addEventListener('dragover', dragOver);
-        celda.addEventListener('drop', drop);
-    });
+    // Delegar eventos a las celdas (td) dentro del tablero, si el contenedor existe
+    if (tableroApuestas) {
+        const celdasApuesta = tableroApuestas.querySelectorAll('td');
+        celdasApuesta.forEach(celda => {
+            celda.addEventListener('dragover', dragOver);
+            celda.addEventListener('drop', drop);
+        });
+    }
     
     // --- FUNCIÓN DE INICIO DE GIRO (window.iniciarApuesta) ---
     window.iniciarApuesta = async function() {
@@ -207,6 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
         statusText.textContent = 'Giro en curso';
 
         try {
+            // 1. Llamada al Backend para obtener el resultado real
             const response = await fetch('/apuesta', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -216,20 +212,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
             
             if (!response.ok || !data.success) {
+                // Si falla el servidor (ej: saldo insuficiente o error de BD)
                 statusText.textContent = `Error: ${data.error || 'Desconocido'}`;
-                // Recargar el saldo correcto del servidor si hay un error
+                // Recargar el saldo correcto del servidor
                 if (data.saldo) {
                     actualizarDinero(Number(data.saldo.replace('$', '').replace(/\./g, '').replace(',', '.'))); 
                 }
                 spinButton.disabled = false;
                 spinButton.textContent = 'INICIAR APUESTA';
-                limpiarApuestasVisuales();
+                limpiarApuestasVisuales(); 
                 return;
             }
 
             const numeroGanador = data.resultado.numero;
 
-            // 3. Aplicar la animación CSS para el giro
+            // 2. Aplicar la animación CSS para el giro
             const index = ruletaNumbers.indexOf(numeroGanador);
             const gradosPorSegmento = 360 / 37;
             const targetGrados = 360 - (index * gradosPorSegmento) - (gradosPorSegmento / 2);
@@ -240,12 +237,13 @@ document.addEventListener('DOMContentLoaded', () => {
             ruletaImg.style.transition = 'transform 6s cubic-bezier(0.2, 0.8, 0.4, 1)'; 
             ruletaImg.style.transform = `rotate(${finalRotation}deg)`;
             
-            // 4. Esperar que termine la animación
+            // 3. Esperar que termine la animación
             setTimeout(() => {
+                // Muestra el resultado y el neto
                 const signo = data.gananciaNeta >= 0 ? '+' : '';
                 statusText.textContent = `GANADOR: ${numeroGanador} (${data.resultado.color}). Neto: ${signo}${data.gananciaNeta.toLocaleString('es-CL')}`;
 
-                // Recargar la página para reflejar el nuevo saldo y el historial
+                // Recargar la página para reflejar el nuevo saldo y el historial (Solución simple)
                 window.location.reload(); 
             }, 6000); 
             
