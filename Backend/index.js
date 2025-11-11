@@ -46,6 +46,7 @@ numeroGanador: { type: Number, default: null }
 
 const Usuario = mongoose.model('Usuario', UsuarioSchema);
 
+// Definición de la ruleta europea (color por número)
 const RUEDA = {
 0: { color: 'verde' },
 1: { color: 'negro' }, 2: { color: 'rojo' }, 3: { color: 'negro' }, 4: { color: 'rojo' },
@@ -60,28 +61,31 @@ const RUEDA = {
 };
 
 function generarResultado() {
-const numeroGanador = Math.floor(Math.random() * 37);
-return {
-numero: numeroGanador,
-color: RUEDA[numeroGanador].color
-};
+    const numeroGanador = Math.floor(Math.random() * 37); // Genera entre 0 y 36
+    return {
+        numero: numeroGanador,
+        color: RUEDA[numeroGanador].color
+    };
 }
 
-// --- NUEVAS FUNCIONES DE LÓGICA DE APUESTA (Reemplaza la antigua calcularGanancia) ---
+// --- FUNCIONES DE LÓGICA DE APUESTA PARA MÚLTIPLES FICHAS ---
 
 // Función auxiliar para determinar si un número coincide con una apuesta
 function esGanadora(apuesta, resultado) {
     const { tipo, valor } = apuesta;
     const { numero, color } = resultado;
 
+    // 1. Apuesta por NÚMERO DIRECTO
     if (tipo === 'numero') {
         return numero === valor; 
     }
 
+    // 2. Apuesta por COLOR
     if (tipo === 'color') {
         return color === valor;
     }
 
+    // 3. Apuesta por PAR/IMPAR
     if (tipo === 'paridad') {
         if (numero === 0) return false; 
         const esPar = numero % 2 === 0;
@@ -89,12 +93,14 @@ function esGanadora(apuesta, resultado) {
         if (valor === 'impar') return !esPar;
     }
 
+    // 4. Apuesta por GRUPO (valor: 'bajo' 1-18, 'alto' 19-36)
     if (tipo === 'grupo') {
         if (numero === 0) return false;
         if (valor === 'bajo' && numero >= 1 && numero <= 18) return true;
         if (valor === 'alto' && numero >= 19 && numero <= 36) return true;
     }
 
+    // 5. Apuesta por DOCENA (valor: 1, 2, 3)
     if (tipo === 'docena') {
         if (numero === 0) return false;
         if (valor === 1 && numero >= 1 && numero <= 12) return true;
@@ -102,11 +108,12 @@ function esGanadora(apuesta, resultado) {
         if (valor === 3 && numero >= 25 && numero <= 36) return true;
     }
 
+    // 6. Apuesta por COLUMNA (valor: 1, 2, 3)
     if (tipo === 'columna') {
         if (numero === 0) return false;
-        if (valor === 1 && numero % 3 === 1) return true;
-        if (valor === 2 && numero % 3 === 2) return true;
-        if (valor === 3 && numero % 3 === 0) return true;
+        if (valor === 1 && numero % 3 === 1) return true; // 1, 4, 7...
+        if (valor === 2 && numero % 3 === 2) return true; // 2, 5, 8...
+        if (valor === 3 && numero % 3 === 0) return true; // 3, 6, 9...
     }
 
     return false;
@@ -117,27 +124,29 @@ function calcularGananciasTotales(apuestas, resultado) {
     let gananciaNeta = 0; 
     let detallesTransaccion = [];
 
+    // Pagos (Ratio de GANANCIA, sin incluir la devolución de la apuesta)
     const PAGOS = {
-        'numero': 35, 
-        'color': 1,   
-        'paridad': 1, 
-        'grupo': 1,   
-        'docena': 2,  
-        'columna': 2  
+        'numero': 35, // 35:1
+        'color': 1,   // 1:1
+        'paridad': 1, // 1:1
+        'grupo': 1,   // 1:1
+        'docena': 2,  // 2:1
+        'columna': 2  // 2:1
     };
 
     apuestas.forEach(apuesta => {
-        let gananciaApuesta = -apuesta.monto; 
+        let gananciaApuesta = -apuesta.monto; // Inicialmente, la pérdida es el monto apostado
         const pagoRatio = PAGOS[apuesta.tipo] || 0; 
         
         const detalle = `Apuesta $${apuesta.monto.toLocaleString('es-CL')} a ${apuesta.tipo}: ${apuesta.valor}`;
         
         if (esGanadora(apuesta, resultado)) {
+            // Monto bruto = Apuesta * (Ratio + 1) (el +1 es la devolución de la apuesta inicial)
             const montoGanadoBruto = apuesta.monto * (pagoRatio + 1);
             gananciaApuesta = montoGanadoBruto;
             detallesTransaccion.push(`${detalle} Gana (+${montoGanadoBruto.toLocaleString('es-CL')})`);
         } else {
-            gananciaApuesta = -apuesta.monto; 
+            gananciaApuesta = -apuesta.monto; // La pérdida es el monto apostado
             detallesTransaccion.push(`${detalle} Pierde (-${apuesta.monto.toLocaleString('es-CL')})`);
         }
         
@@ -145,11 +154,11 @@ function calcularGananciasTotales(apuestas, resultado) {
     });
 
     return {
-        gananciaNeta: gananciaNeta, 
-        detalleCompleto: detallesTransaccion.join(' | ')
+        gananciaNeta: gananciaNeta, // Valor neto a sumar al saldo (puede ser negativo)
+        detalleCompleto: detallesTransaccion.join(' | ') // Historial completo
     };
 }
-// --- FIN NUEVAS FUNCIONES ---
+// --- FIN FUNCIONES DE LÓGICA DE APUESTA ---
 
 app.get('/', (req, res) => res.redirect('Inicio'));
 app.get('/Login', (req, res) => res.render('Login'));
@@ -300,7 +309,7 @@ app.get('/Ruleta',async(req,res)=>{
             apuestas:ultimasApuestas,
             resultados:ultimosResultados,
             // Enviamos el saldo sin formato para que el JS del cliente lo pueda leer fácilmente
-            saldoSinFormato: usuario.saldo 
+            saldoSinFormato: usuario.saldo 
         });
     }catch(error){
         console.error('Error al cargar la ruleta:',error);
@@ -310,61 +319,61 @@ app.get('/Ruleta',async(req,res)=>{
 
 // RUTA POST /apuesta MODIFICADA PARA ARRAYS DE APUESTAS
 app.post('/apuesta', async (req, res) => {
-    const userRut = req.cookies.rut;
-    const { apuestas } = req.body; 
-    let usuario; // Definimos usuario fuera del try para usarlo en el catch
+    const userRut = req.cookies.rut;
+    const { apuestas } = req.body; 
+    let usuario; 
 
-    if (!userRut) return res.status(401).json({ error: 'Usuario no autenticado' });
-    if (!apuestas || apuestas.length === 0) return res.status(400).json({ error: 'No se encontraron apuestas.' });
+    if (!userRut) return res.status(401).json({ error: 'Usuario no autenticado' });
+    if (!apuestas || apuestas.length === 0) return res.status(400).json({ error: 'No se encontraron apuestas.' });
 
-    // Calculamos el total apostado para validación de saldo
-    let totalApostado = apuestas.reduce((sum, a) => sum + a.monto, 0);
+    // Calculamos el total apostado para validación de saldo
+    let totalApostado = apuestas.reduce((sum, a) => sum + a.monto, 0);
 
-    try {
-        usuario = await Usuario.findOne({ rut: userRut });
-        if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
+    try {
+        usuario = await Usuario.findOne({ rut: userRut });
+        if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
 
-        if (totalApostado <= 0) {
-            return res.status(400).json({ error: 'Monto de apuesta total inválido' });
-        }
-        if (totalApostado > usuario.saldo) {
-            return res.status(400).json({ error: 'Saldo insuficiente para la suma de las apuestas.' });
-        }
+        if (totalApostado <= 0) {
+            return res.status(400).json({ error: 'Monto de apuesta total inválido' });
+        }
+        if (totalApostado > usuario.saldo) {
+            return res.status(400).json({ error: 'Saldo insuficiente para la suma de las apuestas.' });
+        }
 
-        const resultado = generarResultado(); 
+        const resultado = generarResultado(); 
 
-        const { gananciaNeta, detalleCompleto } = calcularGananciasTotales(apuestas, resultado);
-        
-        const nuevoSaldo = usuario.saldo + gananciaNeta;
-        const positivo = gananciaNeta >= 0;
+        const { gananciaNeta, detalleCompleto } = calcularGananciasTotales(apuestas, resultado);
+        
+        const nuevoSaldo = usuario.saldo + gananciaNeta;
+        const positivo = gananciaNeta >= 0;
 
-        usuario.saldo = nuevoSaldo;
+        usuario.saldo = nuevoSaldo;
 
-        usuario.transacciones.push({
-            detalle: detalleCompleto, 
-            monto: Math.abs(gananciaNeta), 
-            positivo: positivo,
-            juego: 'ruleta',
-            numeroGanador: resultado.numero
-        });
+        usuario.transacciones.push({
+            detalle: detalleCompleto, 
+            monto: Math.abs(gananciaNeta), 
+            positivo: positivo,
+            juego: 'ruleta',
+            numeroGanador: resultado.numero
+        });
 
-        await usuario.save();
+        await usuario.save();
 
-        res.json({
-            success: true,
-            resultado: {
-                numero: resultado.numero,
-                color: resultado.color
-            },
-            gananciaNeta: gananciaNeta,
-            saldo: nuevoSaldo.toLocaleString('es-CL'),
-            detalle: detalleCompleto
-        });
+        res.json({
+            success: true,
+            resultado: {
+                numero: resultado.numero,
+                color: resultado.color
+            },
+            gananciaNeta: gananciaNeta,
+            saldo: nuevoSaldo.toLocaleString('es-CL'),
+            detalle: detalleCompleto
+        });
 
-    } catch (err) {
-        console.error('Error al procesar la apuesta:', err);
-        res.status(500).json({ error: 'Error interno del servidor al procesar la apuesta', saldo: usuario?.saldo?.toLocaleString('es-CL') });
-    }
+    } catch (err) {
+        console.error('Error al procesar la apuesta:', err);
+        res.status(500).json({ error: 'Error interno del servidor al procesar la apuesta', saldo: usuario?.saldo?.toLocaleString('es-CL') });
+    }
 });
 
 app.get('/Deposito', async (req, res) => {
