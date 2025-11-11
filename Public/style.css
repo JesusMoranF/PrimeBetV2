@@ -141,13 +141,19 @@ details p strong em{color:var(--color-text)}
 .tarjeta-pagina-completa .volver a:hover{color:var(--color-secondary-dark)}
 
 
+/* --- ESTILOS DEL TABLERO DE RULETA --- */
 .game-col-center {
     padding: 10px;
     background-color: #0c6a38;
     border: 5px solid #333;
     box-shadow: 0 0 20px rgba(0,0,0,0.5) inset;
     overflow: auto; 
-    position: relative; 
+    position: relative;
+    flex: 2.8; /* Tablero más grande */
+}
+
+.game-col-left {
+    flex: 1.2; /* Ruleta más pequeña */
 }
 
 #tapete-ruleta {
@@ -189,7 +195,142 @@ details p strong em{color:var(--color-text)}
 /* Clases de utilidad */
 .empty-cell { border: none !important; background-color: transparent !important; }
 
-/* --- FICHAS MEJORADAS CON IMÁGENES --- */
+/* --- CONTROLES DEBAJO DEL TABLERO --- */
+.controles-debajo-tablero {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(20, 20, 20, 0.5);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fichas-container-compacto {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 0 auto 1.5rem;
+    max-width: 700px;
+}
+
+.ficha-compacta {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    cursor: grab;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    user-select: none;
+}
+
+.ficha-compacta:active {
+    cursor: grabbing;
+}
+
+.ficha-compacta:hover {
+    transform: scale(1.15) translateY(-3px);
+    filter: brightness(1.2);
+}
+
+.ficha-compacta img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.5));
+}
+
+.ficha-compacta span {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--color-text);
+    font-weight: bold;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.ficha-compacta.ficha-allin img {
+    filter: drop-shadow(0 3px 8px rgba(217, 4, 41, 0.8));
+}
+
+.ficha-compacta.ficha-allin:hover img {
+    filter: drop-shadow(0 5px 12px rgba(217, 4, 41, 1));
+}
+
+/* Botones de acción lado a lado */
+.botones-accion {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.btn-limpiar-compacto {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+}
+
+/* Estilos para las fichas que se colocan en el tablero (visuales) */
+.ficha-visual-normal, .ficha-visual-allin {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+    z-index: 100;
+    pointer-events: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.ficha-visual-normal {
+    background-color: gold;
+    color: black;
+}
+
+.ficha-visual-allin {
+    background-color: darkred;
+    color: white;
+    border: 2px solid gold;
+}
+
+/* --- ESTILOS ANTIGUOS (MANTENER PARA COMPATIBILIDAD) --- */
+.fichas-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.ficha {
+    width: 60px;
+    height: 60px;
+    background-color: gold; 
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: grab; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    user-select: none;
+}
+
+.ficha.all-in {
+    background-color: darkred;
+    color: white;
+    font-size: 18px;
+    border: 3px solid gold;
+}
+
 .fichas-container-mejorado {
     display: flex;
     justify-content: center;
@@ -246,107 +387,9 @@ details p strong em{color:var(--color-text)}
     filter: drop-shadow(0 6px 16px rgba(217, 4, 41, 1));
 }
 
-/* Estilos para las fichas que se colocan en el tablero (visuales) */
-.ficha-visual-normal, .ficha-visual-allin {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    font-weight: bold;
-    z-index: 100;
-    pointer-events: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
-}
-
-.ficha-visual-normal {
-    background-color: gold;
-    color: black;
-}
-
-.ficha-visual-allin {
-    background-color: darkred;
-    color: white;
-    border: 2px solid gold;
-}
-
-/* --- ESTILOS ANTIGUOS DE FICHAS (MANTENER PARA COMPATIBILIDAD) --- */
-.fichas-container {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 30px;
-}
-
-.ficha {
-    width: 60px;
-    height: 60px;
-    background-color: gold; 
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: black;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: grab; 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-    user-select: none;
-}
-
-.ficha.all-in {
-    background-color: darkred;
-    color: white;
-    font-size: 18px;
-    border: 3px solid gold;
-}
-
-/* Responsive para fichas */
-@media (max-width: 768px) {
-    .ficha-mejorada {
-        width: 60px;
-        height: 60px;
-    }
-    
-    .ficha-mejorada span {
-        font-size: 0.8rem;
-        bottom: -20px;
-    }
-
-    .fichas-container-mejorado {
-        gap: 15px;
-    }
-}
-
-@media (max-width: 576px) {
-    .ficha-mejorada {
-        width: 50px;
-        height: 50px;
-    }
-}
-.disposicion-juego-centrado {
-    display: flex;
-    gap: 2rem;
-    margin-top: 1rem;
-    width: 100%;
-    align-items: flex-start;
-    justify-content: center;
-}
-
-.controles-abajo-tablero {
-    margin-top: 2rem;
-    padding: 2rem;
-    background: rgba(20, 20, 20, 0.6);
-    border-radius: var(--radius-lg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Responsive para layout centrado */
+/* --- RESPONSIVE --- */
 @media (max-width: 992px) {
-    .disposicion-juego-centrado {
+    .disposicion-juego-2col {
         flex-direction: column;
         align-items: center;
     }
@@ -355,98 +398,41 @@ details p strong em{color:var(--color-text)}
     .game-col-center {
         width: 100%;
         max-width: 600px;
+        flex: unset;
     }
 }
-.controles-abajo-tablero-compacto {
-    margin-top: 1.5rem;
-    padding: 1.5rem;
-    background: rgba(20, 20, 20, 0.5);
-    border-radius: var(--radius-md);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
 
-.fichas-container-compacto {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin: 0 auto;
-    max-width: 700px;
-}
-
-.ficha-compacta {
-    position: relative;
-    width: 60px;
-    height: 60px;
-    cursor: grab;
-    transition: transform 0.2s ease, filter 0.2s ease;
-    user-select: none;
-}
-
-.ficha-compacta:active {
-    cursor: grabbing;
-}
-
-.ficha-compacta:hover {
-    transform: scale(1.15) translateY(-3px);
-    filter: brightness(1.2);
-}
-
-.ficha-compacta img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    pointer-events: none;
-    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.5));
-}
-
-.ficha-compacta span {
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: var(--color-text);
-    font-weight: bold;
-    font-size: 0.75rem;
-    white-space: nowrap;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
-}
-
-.ficha-compacta.ficha-allin img {
-    filter: drop-shadow(0 3px 8px rgba(217, 4, 41, 0.8));
-}
-
-.ficha-compacta.ficha-allin:hover img {
-    filter: drop-shadow(0 5px 12px rgba(217, 4, 41, 1));
-}
-
-.btn-limpiar-compacto {
-    padding: 0.6rem 1.5rem;
-    font-size: 0.9rem;
-}
-
-/* Hacer el tablero más grande */
-.game-col-center {
-    flex: 2.8;
-}
-
-.game-col-left {
-    flex: 1.2;
-}
-
-/* Responsive */
 @media (max-width: 768px) {
-    .ficha-compacta {
+    .ficha-compacta,
+    .ficha-mejorada {
         width: 50px;
         height: 50px;
     }
     
-    .ficha-compacta span {
+    .ficha-compacta span,
+    .ficha-mejorada span {
         font-size: 0.7rem;
         bottom: -18px;
     }
 
     .fichas-container-compacto {
         gap: 10px;
+    }
+
+    .botones-accion {
+        flex-direction: column;
+    }
+
+    .btn-spin, 
+    .btn-limpiar-compacto {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .ficha-compacta,
+    .ficha-mejorada {
+        width: 45px;
+        height: 45px;
     }
 }
