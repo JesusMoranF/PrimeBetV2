@@ -171,6 +171,9 @@ details p strong em{color:var(--color-text)}
     box-sizing: border-box;
     line-height: 40px;
     min-width: 40px; 
+    z-index: 2;             /* Asegura que la celda esté encima de cualquier imagen de fondo del div principal */
+    user-select: none;      /* Evita problemas de selección de texto */
+    -webkit-user-select: none; /* Compatibilidad con navegadores */
 }
 
 /* Colores de los números */
@@ -245,4 +248,9 @@ details p strong em{color:var(--color-text)}
     background-color: darkred;
     color: white;
     border: 1px solid gold;
+}
+
+.game-col-center {
+    /* ... (código existente) ... */
+    position: relative; /* CRUCIAL para que el z-index funcione correctamente */
 }
