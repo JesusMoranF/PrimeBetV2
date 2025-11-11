@@ -64,28 +64,26 @@ document.addEventListener('DOMContentLoaded', () => {
         e.dataTransfer.setData('text/plain', JSON.stringify({ valor, tipo }));
         e.dataTransfer.effectAllowed = 'copy';
         
-        // ✅ AGREGADO: Feedback visual
         e.target.style.opacity = '0.5';
     }
 
     function dragEnd(e) {
-        // ✅ AGREGADO: Restaurar opacidad
         e.target.style.opacity = '1';
     }
 
     function dragOver(e) {
-        e.preventDefault(); // ✅ CRÍTICO: Sin esto, el drop no funciona
-        e.stopPropagation(); // ✅ AGREGADO: Evitar propagación
+        e.preventDefault();
+        e.stopPropagation();
         e.dataTransfer.dropEffect = 'copy';
     }
 
     function dragEnter(e) {
-        e.preventDefault(); // ✅ AGREGADO: También necesario
+        e.preventDefault();
     }
 
     function drop(e) {
         e.preventDefault();
-        e.stopPropagation(); // ✅ AGREGADO: Evitar propagación
+        e.stopPropagation();
 
         const data = e.dataTransfer.getData('text/plain');
         if (!data) {
@@ -101,19 +99,16 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        // ✅ MEJORADO: Buscar la celda <td> correcta
         const celda = e.target.closest('td');
 
-        // Si no encontramos una celda <td> o si no tiene ID, salimos.
         if (!celda || !celda.id) {
             console.log('❌ No se encontró celda válida');
             return;
         }
         
         const celdaId = celda.id;
-        console.log('✅ Drop en celda:', celdaId); // Debug
+        console.log('✅ Drop en celda:', celdaId);
 
-        // 1. Verificar si es zona válida
         if (!MAPEO_APUESTAS[celdaId]) {
             console.log('❌ Celda no válida para apostar');
             statusText.textContent = '⚠️ Zona no válida para apostar';
@@ -125,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // 2. Verificar si ya hay una ficha (UNA FICHA POR CELDA)
         if (apuestasActuales[celdaId]) {
             console.log('⚠️ Ya hay apuesta en esta celda');
             statusText.textContent = '⚠️ Ya hay una apuesta aquí';
@@ -155,7 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
             valorApuesta = parseInt(fichaInfo.valor);
         }
 
-        // 3. Verificar fondos
         if (dineroActual < valorApuesta) {
             console.log('❌ Saldo insuficiente');
             statusText.textContent = '⚠️ Saldo insuficiente';
@@ -167,14 +160,12 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // 4. Registrar la Apuesta y Actualizar Dinero
         apuestasActuales[celdaId] = valorApuesta;
         const nuevoMonto = dineroActual - valorApuesta;
         actualizarDinero(nuevoMonto); 
         
-        console.log('✅ Apuesta registrada:', celdaId, valorApuesta); // Debug
+        console.log('✅ Apuesta registrada:', celdaId, valorApuesta);
         
-        // 5. Crear y Mostrar Ficha Visual
         const fichaVisual = document.createElement('div');
         fichaVisual.className = fichaInfo.tipo === 'allin' ? 'ficha-visual-allin' : 'ficha-visual-normal';
         fichaVisual.innerText = fichaInfo.tipo === 'allin' ? 'A' : fichaInfo.valor; 
@@ -189,18 +180,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1500);
     }
 
-    // ✅ CRÍTICO: Inicializar eventos de Drag and Drop en las fichas
     fichas.forEach(ficha => {
         ficha.addEventListener('dragstart', dragStart);
-        ficha.addEventListener('dragend', dragEnd); // ✅ AGREGADO
+        ficha.addEventListener('dragend', dragEnd);
     });
     
-    // ✅ CRÍTICO: Delegar eventos a TODAS las celdas de la tabla
     if (tapeteRuleta) {
         const todasLasCeldas = tapeteRuleta.querySelectorAll('td');
         todasLasCeldas.forEach(celda => {
             celda.addEventListener('dragover', dragOver);
-            celda.addEventListener('dragenter', dragEnter); // ✅ AGREGADO
+            celda.addEventListener('dragenter', dragEnter);
             celda.addEventListener('drop', drop);
         });
         console.log(`✅ Eventos de drop agregados a ${todasLasCeldas.length} celdas`);
@@ -208,7 +197,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('❌ No se encontró el tapete de ruleta');
     }
     
-    // --- FUNCIÓN DE INICIO DE GIRO (window.iniciarApuesta) ---
     window.iniciarApuesta = async function() {
         if (Object.keys(apuestasActuales).length === 0) {
             alert("¡No hay fichas apostadas para iniciar el giro!");
@@ -224,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
             };
         });
         
-        console.log('🎰 Enviando apuestas:', apuestasParaEnviar); // Debug
+        console.log('🎰 Enviando apuestas:', apuestasParaEnviar);
         
         spinButton.disabled = true;
         spinButton.textContent = 'GIRANDO...';
@@ -238,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             const data = await response.json();
-            console.log('📥 Respuesta del servidor:', data); // Debug
+            console.log('📥 Respuesta del servidor:', data);
             
             if (!response.ok || !data.success) {
                 statusText.textContent = `❌ Error: ${data.error || 'Desconocido'}`;
@@ -254,7 +242,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const numeroGanador = data.resultado.numero;
 
-            // ✅ CRÍTICO: Calcular rotación
             const index = ruletaNumbers.indexOf(numeroGanador);
             if (index === -1) {
                 console.error('❌ Número ganador no encontrado en ruletaNumbers');
@@ -267,9 +254,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const girosCompletos = 5 * 360; 
             const finalRotation = girosCompletos + targetGrados;
 
-            console.log('🎡 Rotando ruleta a:', finalRotation, 'grados'); // Debug
+            console.log('🎡 Rotando ruleta a:', finalRotation, 'grados');
 
-            // ✅ ASEGURAR que la imagen existe
             if (!ruletaImg) {
                 console.error('❌ No se encontró la imagen de la ruleta');
                 return;
@@ -283,13 +269,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 statusText.textContent = `🎉 GANADOR: ${numeroGanador} (${data.resultado.color}). Neto: ${signo}$${Math.abs(data.gananciaNeta).toLocaleString('es-CL')}`;
                 statusText.style.color = data.gananciaNeta >= 0 ? 'var(--color-success)' : 'var(--color-danger)';
 
-                // ✅ MEJORADO: Actualizar sin recargar
                 setTimeout(() => {
                     limpiarApuestasVisuales();
                     spinButton.disabled = false;
                     spinButton.textContent = 'INICIAR APUESTA';
-                    // ✅ Opcional: Recargar solo si quieres actualizar historial
-                    // window.location.reload();
                 }, 3000);
             }, 6000); 
             
@@ -302,9 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ✅ AGREGADO: Función para limpiar apuestas manualmente
     window.limpiarApuestas = function() {
-        // Devolver dinero de apuestas actuales
         let dineroADevolver = 0;
         Object.values(apuestasActuales).forEach(monto => {
             dineroADevolver += monto;
