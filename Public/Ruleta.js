@@ -66,7 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function dragOver(e) {
-        // CRUCIAL: Prevenir el default para permitir la caída
         e.preventDefault(); 
         e.dataTransfer.dropEffect = 'copy';
     }
