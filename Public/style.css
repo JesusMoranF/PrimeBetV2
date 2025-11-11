@@ -357,3 +357,96 @@ details p strong em{color:var(--color-text)}
         max-width: 600px;
     }
 }
+.controles-abajo-tablero-compacto {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(20, 20, 20, 0.5);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fichas-container-compacto {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    max-width: 700px;
+}
+
+.ficha-compacta {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    cursor: grab;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    user-select: none;
+}
+
+.ficha-compacta:active {
+    cursor: grabbing;
+}
+
+.ficha-compacta:hover {
+    transform: scale(1.15) translateY(-3px);
+    filter: brightness(1.2);
+}
+
+.ficha-compacta img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.5));
+}
+
+.ficha-compacta span {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--color-text);
+    font-weight: bold;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.ficha-compacta.ficha-allin img {
+    filter: drop-shadow(0 3px 8px rgba(217, 4, 41, 0.8));
+}
+
+.ficha-compacta.ficha-allin:hover img {
+    filter: drop-shadow(0 5px 12px rgba(217, 4, 41, 1));
+}
+
+.btn-limpiar-compacto {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+}
+
+/* Hacer el tablero más grande */
+.game-col-center {
+    flex: 2.8;
+}
+
+.game-col-left {
+    flex: 1.2;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .ficha-compacta {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .ficha-compacta span {
+        font-size: 0.7rem;
+        bottom: -18px;
+    }
+
+    .fichas-container-compacto {
+        gap: 10px;
+    }
+}
