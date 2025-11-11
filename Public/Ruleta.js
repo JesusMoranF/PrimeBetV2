@@ -12,8 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- ESTADO Y MAPEO ---
     
-    // Mapeo para traducir IDs/Clases a tipos de apuesta para el Backend
-    // IMPORTANTE: ESTOS IDs DEBEN EXISTIR EN TU TABLA HTML DE APUESTAS
     const MAPEO_APUESTAS = {
         'n0': { tipo: 'numero', valor: 0 }, 
         'n1': { tipo: 'numero', valor: 1 }, 
@@ -61,25 +59,21 @@ document.addEventListener('DOMContentLoaded', () => {
         '1st12': { tipo: 'docena', valor: 1 },
         '2nd12': { tipo: 'docena', valor: 2 },
         '3rd12': { tipo: 'docena', valor: 3 },
-        '2to1_1': { tipo: 'columna', valor: 1 }, // Primera Columna
-        '2to1_2': { tipo: 'columna', valor: 2 }, // Segunda Columna
-        '2to1_3': { tipo: 'columna', valor: 3 }  // Tercera Columna
+        '2to1_1': { tipo: 'columna', valor: 1 }, 
+        '2to1_2': { tipo: 'columna', valor: 2 }, 
+        '2to1_3': { tipo: 'columna', valor: 3 }  
     };
 
-    // Objeto que almacena la apuesta actual { 'clave_celda': monto_apostado }
     let apuestasActuales = {};
 
     // --- UTILERÍAS ---
     
-    // Función para obtener el dinero del DOM (removiendo formato)
     function obtenerDinero() {
         const dineroTexto = document.getElementById('dinero-disponible').textContent.replace('$', '').trim();
-        // Limpia separadores de miles (.), reemplaza la coma si existe (aunque tu formato es solo puntos)
         const dineroLimpio = dineroTexto.replace(/\./g, '').replace(',', '.'); 
         return Number(dineroLimpio); 
     }
 
-    // Función para actualizar el dinero en el DOM con formato
     function actualizarDinero(nuevoMonto) {
         const formatter = new Intl.NumberFormat('es-CL', {
             style: 'currency',
@@ -89,15 +83,13 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('dinero-disponible').textContent = formatter.format(nuevoMonto).replace('USD', '$').trim();
     }
 
-    // Función para limpiar las fichas visuales del tablero
     function limpiarApuestasVisuales() {
-        // Obtenemos todas las celdas dentro del contenedor del tablero
         const zonasApuesta = tableroApuestas.querySelectorAll('td');
         zonasApuesta.forEach(celda => {
             const fichasVisuales = celda.querySelectorAll('.ficha-visual-normal, .ficha-visual-allin');
             fichasVisuales.forEach(ficha => ficha.remove());
         });
-        apuestasActuales = {}; // Reinicia el modelo de datos
+        apuestasActuales = {}; 
     }
     
     // --- DRAG AND DROP HANDLERS ---
@@ -121,8 +113,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!data) return;
 
         const fichaInfo = JSON.parse(data);
-        const celda = e.target.closest('td');
-        const celdaId = celda ? celda.id : null; 
+        
+        // CORRECCIÓN CLAVE: Buscar la celda <td> correcta
+        let celda = e.target;
+        while (celda && celda.tagName !== 'TD' && celda.id !== 'tablero-apuestas') {
+            celda = celda.parentElement;
+        }
+        
+        // Si no encontramos una celda <td> o si salimos del tablero, salimos.
+        if (!celda || celda.id === 'tablero-apuestas') {
+             console.log("Drop fuera de celda válida.");
+             return;
+        }
+        
+        const celdaId = celda.id;
 
         // 1. Verificar si es zona válida y si ya hay una ficha (UNA FICHA POR CELDA)
         if (celdaId && MAPEO_APUESTAS[celdaId] && !apuestasActuales[celdaId]) {
@@ -150,10 +154,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // 4. Crear y Mostrar Ficha Visual
             const fichaVisual = document.createElement('div');
             fichaVisual.className = fichaInfo.tipo === 'allin' ? 'ficha-visual-allin' : 'ficha-visual-normal';
-            fichaVisual.innerText = fichaInfo.tipo === 'allin' ? 'A' : fichaInfo.valor; // Usamos 'A' para All In si el valor es largo
+            fichaVisual.innerText = fichaInfo.tipo === 'allin' ? 'A' : fichaInfo.valor; 
             fichaVisual.dataset.valor = valorApuesta; 
             
-            // Estilos de posicionamiento (el CSS principal debe encargarse de la apariencia)
+            // Estilos de posicionamiento
             celda.style.position = 'relative'; 
             fichaVisual.style.position = 'absolute';
             fichaVisual.style.top = '50%';
@@ -164,6 +168,8 @@ document.addEventListener('DOMContentLoaded', () => {
             celda.appendChild(fichaVisual);
 
             statusText.textContent = 'Estado: Apuesta registrada. ¡Listo para girar!';
+        } else {
+            console.log(`Drop fallido. Celda ya ocupada o ID inválido: ${celdaId}`);
         }
     }
 
@@ -172,13 +178,11 @@ document.addEventListener('DOMContentLoaded', () => {
         ficha.addEventListener('dragstart', dragStart);
     });
     
-    // Delegar eventos a las celdas (td) dentro del tablero, si el contenedor existe
+    // Delegar eventos a todas las celdas dentro del tapete
     if (tableroApuestas) {
-        const celdasApuesta = tableroApuestas.querySelectorAll('td');
-        celdasApuesta.forEach(celda => {
-            celda.addEventListener('dragover', dragOver);
-            celda.addEventListener('drop', drop);
-        });
+        // En lugar de usar querySelectorAll('td'), delegamos los eventos al contenedor
+        tableroApuestas.addEventListener('dragover', dragOver);
+        tableroApuestas.addEventListener('drop', drop);
     }
     
     // --- FUNCIÓN DE INICIO DE GIRO (window.iniciarApuesta) ---
@@ -202,7 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
         statusText.textContent = 'Giro en curso';
 
         try {
-            // 1. Llamada al Backend para obtener el resultado real
             const response = await fetch('/apuesta', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -212,9 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
             
             if (!response.ok || !data.success) {
-                // Si falla el servidor (ej: saldo insuficiente o error de BD)
                 statusText.textContent = `Error: ${data.error || 'Desconocido'}`;
-                // Recargar el saldo correcto del servidor
                 if (data.saldo) {
                     actualizarDinero(Number(data.saldo.replace('$', '').replace(/\./g, '').replace(',', '.'))); 
                 }
@@ -226,7 +227,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const numeroGanador = data.resultado.numero;
 
-            // 2. Aplicar la animación CSS para el giro
             const index = ruletaNumbers.indexOf(numeroGanador);
             const gradosPorSegmento = 360 / 37;
             const targetGrados = 360 - (index * gradosPorSegmento) - (gradosPorSegmento / 2);
@@ -237,13 +237,10 @@ document.addEventListener('DOMContentLoaded', () => {
             ruletaImg.style.transition = 'transform 6s cubic-bezier(0.2, 0.8, 0.4, 1)'; 
             ruletaImg.style.transform = `rotate(${finalRotation}deg)`;
             
-            // 3. Esperar que termine la animación
             setTimeout(() => {
-                // Muestra el resultado y el neto
                 const signo = data.gananciaNeta >= 0 ? '+' : '';
                 statusText.textContent = `GANADOR: ${numeroGanador} (${data.resultado.color}). Neto: ${signo}${data.gananciaNeta.toLocaleString('es-CL')}`;
 
-                // Recargar la página para reflejar el nuevo saldo y el historial (Solución simple)
                 window.location.reload(); 
             }, 6000); 
             
