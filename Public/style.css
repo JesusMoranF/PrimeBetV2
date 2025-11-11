@@ -248,3 +248,110 @@ details p strong em{color:var(--color-text)}
     color: white;
     border: 1px solid gold;
 }
+.game-col-center {
+    /* El contenedor del tablero */
+    padding: 10px;
+    background-color: #0c6a38; /* Color verde del paño */
+    border: 5px solid #333;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5) inset;
+    overflow: auto; 
+    position: relative; 
+}
+
+#tapete-ruleta {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; 
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+}
+
+#tapete-ruleta td {
+    border: 2px solid #555;
+    padding: 0;
+    text-align: center;
+    height: 40px;
+    cursor: grab; 
+    position: relative; /* CRUCIAL para que las fichas (absolute) se posicionen */
+    box-sizing: border-box;
+    line-height: 40px;
+    min-width: 40px; 
+    z-index: 2;             
+    user-select: none;      
+    -webkit-user-select: none; 
+}
+
+/* Colores de los números */
+.zero { background-color: #0c6a38; color: gold; font-size: 1.2em; }
+.red { background-color: #d90f0f; }
+.black { background-color: #303030; }
+
+/* Celdas de apuestas externas */
+.twotoone, .dozen, .group-bet, .red-bet, .black-bet {
+    background-color: #084c28; /* Verde oscuro para las áreas */
+    font-size: 0.8em;
+    cursor: grab;
+}
+
+/* Clases de utilidad */
+.empty-cell { border: none !important; background-color: transparent !important; }
+
+/* --- ESTILOS PARA LAS FICHAS (Drag and Drop) --- */
+
+.fichas-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.ficha {
+    width: 60px;
+    height: 60px;
+    background-color: gold; 
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: grab; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    user-select: none;
+}
+
+.ficha.all-in {
+    background-color: darkred;
+    color: white;
+    font-size: 18px;
+    border: 3px solid gold;
+}
+
+/* Estilos para las fichas que se colocan en el tablero (visuales) */
+.ficha-visual-normal, .ficha-visual-allin {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    font-weight: bold;
+    z-index: 100;
+    pointer-events: none; 
+    transition: none; 
+}
+
+.ficha-visual-normal {
+    background-color: gold;
+    color: black;
+}
+
+.ficha-visual-allin {
+    background-color: darkred;
+    color: white;
+    border: 1px solid gold;
+}
