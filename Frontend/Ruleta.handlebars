@@ -66,6 +66,7 @@
             </div>
         </div>
     </div>
+
     <div class="tarjeta-pagina-completa tarjeta-juego">
         <h1>Juego de la ruleta</h1>
 
@@ -73,15 +74,10 @@
             
             <div class="game-col-left">
                 <img src="/Ruleta.webp" alt="Ruleta Europea" class="ruleta-imagen-pequena">
-                <div class="ruleta-indicador"></div> 
-                
-               <div class="betting-controls-bottom">
-    <button class="btn-spin" onclick="iniciarApuesta()">INICIAR APUESTA</button>
-</div>
+                <div class="ruleta-indicador"></div>
             </div>
 
             <div class="game-col-center" id="tablero-apuestas">
-                <!-- TAPETE INTERACTIVO (LA IMAGEN HA SIDO ELIMINADA) -->
                 <table id="tapete-ruleta" class="roulette-table">
                     <tbody>
                         <!-- Fila del Cero -->
@@ -142,7 +138,7 @@
                             <td colspan="4" id="3rd12" class="dozen">3rd 12</td>
                             <td colspan="1" class="empty-cell"></td>
                         </tr>
-                        <!-- Fila de Apuestas Externas (1-18, Rojo/Negro, etc.) -->
+                        <!-- Fila de Apuestas Externas -->
                         <tr>
                             <td colspan="1" class="empty-cell"></td>
                             <td colspan="2" id="1a18" class="group-bet">1-18</td>
@@ -155,16 +151,13 @@
                         </tr>
                     </tbody>
                 </table>
-                <!-- FIN TABLA INTERACTIVA -->
             </div>
             
         </div>
 
-        </div> <!-- Cierre de disposicion-juego-2col -->
-
-        <!-- CONTENEDOR DE FICHAS Y CONTROLES -->
-        <div style="margin-top: 2rem; text-align: center;">
-            <h3 style="color: var(--color-secondary); margin-bottom: 1rem;">Selecciona tu ficha</h3>
+        <!-- CONTROLES ABAJO DEL TABLERO -->
+        <div class="controles-abajo-tablero">
+            <h3 style="color: var(--color-secondary); margin-bottom: 1.5rem; text-align: center;">Selecciona tu ficha</h3>
             
             <div id="fichas-container" class="fichas-container-mejorado">
                 <div class="ficha-mejorada" draggable="true" data-valor="10" data-tipo="normal">
@@ -193,12 +186,14 @@
                 </div>
             </div>
 
-            <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button class="btn-spin" onclick="iniciarApuesta()">🎰 INICIAR APUESTA</button>
                 <button class="btn btn-outline" onclick="limpiarApuestas()">
-                     Limpiar Apuestas
+                    🗑️ Limpiar Apuestas
                 </button>
             </div>
         </div>
+
     </div>
 </div>
 
