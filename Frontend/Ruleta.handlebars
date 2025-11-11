@@ -1,0 +1,100 @@
+<header class="encabezado-fijo">
+    <nav class="navbar-inicio">
+        <h1 class="logo-text">PrimeBet</h1>
+        <div class="nav-links-inicio">
+            <a href="/Retiro" class="nav-link-item">Realizar retiro</a>
+            <a href="/Deposito" class="nav-link-item">Realizar depósito</a>
+            <a href="/Perfil" class="nav-link-item">Ir al perfil</a>
+            <a href="/logout" class="nav-link-item" style="color: var(--color-danger);">Cerrar Sesión</a>
+        </div>
+    </nav>
+</header>
+
+<div class="contenedor-ruleta-principal">
+    
+    <div class="panel-historial-lateral">
+        <p class="balance-status">Dinero disponible: <span id="dinero-disponible">${{saldo}}</span></p>
+        <p class="balance-status" style="margin-bottom: 2rem;">Estado: <span id="estado-apuesta">{{#if estado}}{{estado}}{{else}}Esperando apuesta{{/if}}</span></p>
+        
+        <div class="historial-grid"> 
+            <div class="historial-columna">
+                <h3>Últimas apuestas</h3>
+                {{#if apuestas}}
+                <table class="tabla-apuestas">
+                    <thead>
+                        <tr><th>Resultado</th><th>Total Neto</th></tr>
+                    </thead>
+                    <tbody>
+                        {{#each apuestas}}
+                            <tr>
+                                <td class="apuesta-estado {{this.color}}">
+                                    {{this.detalle}}
+                                </td>
+                                <td style="text-align: right;">
+                                    <span style="font-weight: bold; font-size: 0.9rem;">
+                                        {{this.montoGanado}}
+                                    </span>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                {{else}}
+                    <p class="text-muted">No hay apuestas recientes.</p>
+                {{/if}}
+            </div>
+
+            <div class="historial-columna">
+                <h3>Últimos resultados</h3>
+                {{#if resultados}}
+                <table class="tabla-resultados">
+                    <thead>
+                        <tr><th>#</th><th>Resultado</th></tr>
+                    </thead>
+                    <tbody>
+                        {{#each resultados}}
+                            <tr>
+                                <td>{{@index}}</td>
+                                <td class="resultado-numero color-{{this.color}}">{{this.detalle}}</td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                {{else}}
+                    <p class="text-muted">No hay resultados aún.</p>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+    <div class="tarjeta-pagina-completa tarjeta-juego">
+        <h1>Juego de la ruleta</h1>
+
+        <div class="disposicion-juego-2col">
+            
+            <div class="game-col-left">
+                <img src="/Ruleta.webp" alt="Ruleta Europea" class="ruleta-imagen-pequena">
+                <div class="ruleta-indicador"></div> 
+                
+                <div class="betting-controls-bottom">
+                    <button class="btn-spin" onclick="iniciarApuesta()">INICIAR APUESTA</button>
+                </div>
+            </div>
+
+            <div class="game-col-center" id="tablero-apuestas">
+                                <img src="/Tabla_Ruleta.webp" alt="Tapete de Ruleta" class="roulette-table-img">
+            </div>
+            
+        </div>
+
+        <div id="fichas-container" class="fichas-container">
+            <div class="ficha" draggable="true" data-valor="10" data-tipo="normal">10</div>
+            <div class="ficha" draggable="true" data-valor="50" data-tipo="normal">50</div>
+            <div class="ficha" draggable="true" data-valor="100" data-tipo="normal">100</div>
+            <div class="ficha" draggable="true" data-valor="500" data-tipo="normal">500</div>
+            <div class="ficha" draggable="true" data-valor="1000" data-tipo="normal">1k</div>
+            <div class="ficha all-in" draggable="true" data-valor="ALLIN" data-tipo="allin">ALL IN</div>
+        </div>
+            </div>
+</div>
+
+<script src="/js/juego.js"></script>

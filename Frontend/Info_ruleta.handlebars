@@ -1,0 +1,137 @@
+<div class="contenedor-pagina-centrado">
+  <div class="tarjeta-pagina-completa">
+    <h1>Información sobre la Ruleta y sus Reglas</h1>
+
+    <div class="info-content"> 
+
+      <section id="reglas">
+        <h2>Reglas del juego (Ruleta europea)</h2>
+        <ul>
+          <li>La ruleta europea tiene <strong>37 números</strong>: del <strong>0 (verde)</strong> al <strong>36</strong> (18 rojos y 18 negros).</li>
+          <li>El <strong>0</strong> no cuenta como rojo/negro ni par/impar y hace perder las apuestas exteriores (salvo reglas especiales).</li>
+          <li>Flujo de ronda: “<em>Hagan sus apuestas</em>” → giro → “<em>No va más</em>” → resultado y pagos.</li>
+          <li>Se permiten varias apuestas en la misma ronda, respetando los <strong>límites de mesa</strong>.</li>
+          <li>Reglas opcionales (si quieres incluirlas): <strong>La Partage</strong> y <strong>En Prison</strong> para apuestas 1:1 cuando sale 0.</li>
+        </ul>
+      </section>
+
+      <hr/>
+
+      <section id="apuestas">
+        <h2>Explicación de tipos de apuesta</h2>
+
+        <h3>Interiores (más riesgo, mayor pago)</h3>
+        <ul>
+          <li><strong>Pleno (Straight-Up):</strong> un número (p. ej., 17).</li>
+          <li><strong>Caballo (Split):</strong> 2 números adyacentes en el tapete (vertical u horizontal).</li>
+          <li><strong>Calle (Street):</strong> fila de 3 números (p. ej., 16–17–18).</li>
+          <li><strong>Cuadro/Esquina (Corner):</strong> bloque de 4 números.</li>
+          <li><strong>Seisena (Six Line):</strong> dos calles contiguas (6 números).</li>
+        </ul>
+
+        <h3>Exteriores (menos riesgo, menor pago)</h3>
+        <ul>
+          <li><strong>Docena:</strong> 1–12, 13–24 o 25–36.</li>
+          <li><strong>Columna:</strong> una de las 3 columnas.</li>
+          <li><strong>Rojo/Negro</strong>, <strong>Par/Impar</strong>, <strong>Falta/Pasa</strong> (1–18 / 19–36).</li>
+        </ul>
+
+        <h3>Apuestas anunciadas (pista francesa / “racetrack”)</h3>
+        <ul>
+          <li><strong>Vecinos de un número:</strong> el número elegido + 2 vecinos a cada lado (5 números; usualmente 5 fichas).</li>
+          <li><strong>Voisins du Zéro:</strong> 17 números alrededor del 0 (normalmente 9 fichas en splits/trío/cuadro).</li>
+          <li><strong>Tiers du Cylindre:</strong> 12 números opuestos al 0 (6 splits, 6 fichas).</li>
+          <li><strong>Orphelins:</strong> 8 números “huérfanos” (5 fichas: 1 pleno + 4 splits).</li>
+          <li><strong>Jeu Zéro / Zero Spiel:</strong> 7 números cercanos al 0 (4 fichas: 3 splits + 1 pleno).</li>
+        </ul>
+      </section>
+
+      <hr/>
+
+      <section id="probabilidades">
+        <h2>Probabilidades y pagos</h2>
+        <p><strong>Borde de la casa estándar: 2,70%</strong> (ruleta europea con 0).
+        Con <em>La Partage/En Prison</em>, las apuestas 1:1 bajan a <strong>1,35%</strong>.</p>
+
+        <div style="overflow-x: auto;">
+          <table class="tabla-probabilidades" style="width: 100%; border-collapse: collapse; min-width: 560px;">
+            <thead>
+              <tr>
+                <th style="text-align:left; border-bottom: 1px solid #999;">Apuesta</th>
+                <th style="text-align:right; border-bottom: 1px solid #999;">Números</th>
+                <th style="text-align:right; border-bottom: 1px solid #999;">Prob. acierto</th>
+                <th style="text-align:right; border-bottom: 1px solid #999;">Pago neto*</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Pleno</td>
+                <td style="text-align:right;">1</td>
+                <td style="text-align:right;">1/37 = 2,70%</td>
+                <td style="text-align:right;">35:1</td>
+              </tr>
+              <tr>
+                <td>Caballo (Split)</td>
+                <td style="text-align:right;">2</td>
+                <td style="text-align:right;">2/37 = 5,41%</td>
+                <td style="text-align:right;">17:1</td>
+              </tr>
+              <tr>
+                <td>Calle (Street)</td>
+                <td style="text-align:right;">3</td>
+                <td style="text-align:right;">3/37 = 8,11%</td>
+                <td style="text-align:right;">11:1</td>
+              </tr>
+              <tr>
+                <td>Cuadro (Corner)</td>
+                <td style="text-align:right;">4</td>
+                <td style="text-align:right;">4/37 = 10,81%</td>
+                <td style="text-align:right;">8:1</td>
+              </tr>
+              <tr>
+                <td>Seisena (Six Line)</td>
+                <td style="text-align:right;">6</td>
+                <td style="text-align:right;">6/37 = 16,22%</td>
+                <td style="text-align:right;">5:1</td>
+              </tr>
+              <tr>
+                <td>Docena / Columna</td>
+                <td style="text-align:right;">12</td>
+                <td style="text-align:right;">12/37 = 32,43%</td>
+                <td style="text-align:right;">2:1</td>
+              </tr>
+              <tr>
+                <td>Rojo/Negro, Par/Impar, Falta/Pasa</td>
+                <td style="text-align:right;">18</td>
+                <td style="text-align:right;">18/37 = 48,65%</td>
+                <td style="text-align:right;">1:1</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size: 0.95em;"><em>*Pago neto: ganancias sin contar la devolución de la apuesta ganadora.</em></p>
+        <p style="font-size: 0.95em;">Coberturas típicas de anunciadas (referencia): Voisins 17/37 (45,95%), Tiers 12/37 (32,43%), Orphelins 8/37 (21,62%), Zero Spiel 7/37 (18,92%).
+        El pago final depende de si aciertan los <strong>splits/plenos</strong> que las componen.</p>
+      </section>
+
+      <hr/>
+
+      <section id="responsable">
+        <h2>Consejos de juego responsable</h2>
+        <ul>
+          <li>Define un <strong>presupuesto</strong> y no lo superes.</li>
+          <li>Establece un <strong>límite de tiempo</strong> y toma pausas.</li>
+          <li><strong>No persigas pérdidas</strong> aumentando la apuesta.</li>
+          <li>Recuerda: existe una <strong>ventaja fija</strong> de la casa; ningún sistema la elimina.</li>
+          <li>Evita jugar bajo <strong>estrés, cansancio o alcohol</strong>.</li>
+          <li>Si el juego deja de ser entretenido, <strong>detente</strong> y busca apoyo.</li>
+        </ul>
+        
+      </section>
+    </div>
+
+    <div class="volver">
+      <a href="/Inicio">Volver a la página de inicio</a>
+    </div>
+  </div>
+</div>

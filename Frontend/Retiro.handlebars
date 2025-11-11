@@ -1,0 +1,23 @@
+<div class="contenedor-pagina-centrado">
+  <div class="formulario">
+    <h1>Retiro</h1>
+    <p>Saldo actual: ${{saldo}}</p>
+
+    <form action="/Retiro" method="POST">
+      <div class="input-box">
+        <input type="number" name="monto" required min="1">
+        <label>Monto a retirar</label>
+      </div>
+      
+      <input type="submit" value="Retirar">
+      
+      <div class="volver">
+        <a href="/Ruleta" class="btn-outline">Volver a la Ruleta</a>
+      </div>
+    </form>
+
+    {{#if error}}
+      <p class="alert alert-danger">{{error}}</p>
+    {{/if}}
+  </div>
+</div>

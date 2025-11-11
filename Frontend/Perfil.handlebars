@@ -1,0 +1,89 @@
+<header class="encabezado-fijo">
+    <nav class="navbar-inicio">
+        <h1 class="logo-text">PrimeBet</h1>
+        <div class="nav-links-inicio">
+            <a href="/Retiro" class="nav-link-item">Realizar retiro</a>
+            <a href="/Deposito" class="nav-link-item">Realizar depósito</a>
+            <a href="/Ruleta" class="nav-link-item">Ir a ruleta</a>
+            <a href="/logout" class="nav-link-item" style="color: var(--color-danger);">Cerrar Sesión</a>
+        </div>
+    </nav>
+</header>
+
+<div class="contenedor-pagina-centrado">
+    <div class="tarjeta-pagina-completa">
+        <h1>Bienvenido, {{nombre}}</h1>
+
+        <div class="profile-layout">
+            <section class="profile-info">
+                <h2>Información de la Cuenta</h2>
+                <ul>
+                    <li>Nombre de Usuario: <strong>{{usuario}}</strong></li>
+                    <li>Email: <strong>{{email}}</strong></li>
+                    <li>Fecha de Nacimiento: <strong>{{fechaNacimiento}}</strong></li>
+                    <li>Saldo Disponible: <strong>${{saldo}}</strong></li>
+                </ul>
+            </section>
+
+            <h2>Últimas 5 Transacciones (Depósitos/Retiros)</h2>
+            
+            <table class="tabla-transacciones">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Detalle</th>
+                        <th>Importe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#if transacciones}}
+                        {{#each transacciones}}
+                            <tr>
+                                <td>{{this.fecha}}</td>
+                                <td>{{this.detalle}}</td>
+                                
+                                <td style="color: {{#if this.positivo}}var(--color-success){{else}}var(--color-danger){{/if}};">
+                                    {{#if this.positivo}}+{{else}}-{{/if}} ${{this.monto}} 
+                                </td>
+                            </tr>
+                        {{/each}}
+                    {{else}}
+                        <tr>
+                            <td colspan="3">No hay transacciones monetarias registradas aún.</td>
+                        </tr>
+                    {{/if}}
+                </tbody>
+            </table>
+            
+            <h2 style="margin-top: 2rem;">Últimas 5 Apuestas</h2>
+            
+            <table class="tabla-transacciones">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Detalle</th>
+                        <th>Importe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#if apuestas}}
+                        {{#each apuestas}}
+                            <tr>
+                                <td>{{this.fecha}}</td>
+                                <td>{{this.detalle}}</td>
+                                
+                                <td style="color: {{#if this.positivo}}var(--color-success){{else}}var(--color-danger){{/if}};">
+                                    {{#if this.positivo}}+{{else}}-{{/if}} ${{this.monto}} 
+                                </td>
+                            </tr>
+                        {{/each}}
+                    {{else}}
+                        <tr>
+                            <td colspan="3">No hay apuestas registradas aún.</td>
+                        </tr>
+                    {{/if}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
