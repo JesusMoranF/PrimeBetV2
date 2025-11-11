@@ -81,10 +81,15 @@
             </div>
 
             <div class="game-col-center" id="tablero-apuestas">
+                <!-- ======================================================= -->
+                <!-- TAPETE INTERACTIVO: NO HAY IMAGEN, SOLO LA TABLA HTML -->
+                <!-- ======================================================= -->
                 <table id="tapete-ruleta" class="roulette-table">
                     <tbody>
+                        <!-- Fila del Cero -->
                         <tr>
                             <td rowspan="3" id="n0" class="zero">0</td>
+                            <!-- Tercera Columna (superior) -->
                             <td id="n3" class="black">3</td>
                             <td id="n6" class="red">6</td>
                             <td id="n9" class="black">9</td>
@@ -100,6 +105,7 @@
                             <td id="2to1_3" class="twotoone">2 to 1</td>
                         </tr>
                         <tr>
+                            <!-- Segunda Columna (medio) -->
                             <td id="n2" class="red">2</td>
                             <td id="n5" class="black">5</td>
                             <td id="n8" class="red">8</td>
@@ -115,6 +121,7 @@
                             <td id="2to1_2" class="twotoone">2 to 1</td>
                         </tr>
                         <tr>
+                            <!-- Primera Columna (inferior) -->
                             <td id="n1" class="red">1</td>
                             <td id="n4" class="black">4</td>
                             <td id="n7" class="red">7</td>
@@ -129,6 +136,7 @@
                             <td id="n34" class="red">34</td>
                             <td id="2to1_1" class="twotoone">2 to 1</td>
                         </tr>
+                        <!-- Fila de Apuestas por Docenas -->
                         <tr>
                             <td colspan="1" class="empty-cell"></td>
                             <td colspan="4" id="1st12" class="dozen">1st 12</td>
@@ -136,6 +144,7 @@
                             <td colspan="4" id="3rd12" class="dozen">3rd 12</td>
                             <td colspan="1" class="empty-cell"></td>
                         </tr>
+                        <!-- Fila de Apuestas Externas (1-18, Rojo/Negro, etc.) -->
                         <tr>
                             <td colspan="1" class="empty-cell"></td>
                             <td colspan="2" id="1a18" class="group-bet">1-18</td>
@@ -148,10 +157,12 @@
                         </tr>
                     </tbody>
                 </table>
-                </div>
+                <!-- FIN TABLA INTERACTIVA -->
+            </div>
             
         </div>
 
+        <!-- CONTENEDOR DE FICHAS -->
         <div id="fichas-container" class="fichas-container">
             <div class="ficha" draggable="true" data-valor="10" data-tipo="normal">10</div>
             <div class="ficha" draggable="true" data-valor="50" data-tipo="normal">50</div>
@@ -160,7 +171,9 @@
             <div class="ficha" draggable="true" data-valor="1000" data-tipo="normal">1k</div>
             <div class="ficha all-in" draggable="true" data-valor="ALLIN" data-tipo="allin">ALL IN</div>
         </div>
-        </div>
+        <!-- FIN CONTENEDOR DE FICHAS -->
+    </div>
 </div>
 
 <script src="/js/juego.js"></script>
+
