@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ruletaImg = document.querySelector('.ruleta-imagen-pequena');
     const spinButton = document.querySelector('.btn-spin');
     const statusText = document.getElementById('estado-apuesta');
-    const fichas = document.querySelectorAll('.ficha-mejorada');
+    const fichas = document.querySelectorAll('.ficha-mejorada, .ficha-compacta');
     const tapeteRuleta = document.getElementById('tapete-ruleta'); // ✅ CAMBIO: Usar la tabla directamente
 
     // El orden de los números en la ruleta europea (para calcular la posición final)
@@ -59,8 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- DRAG AND DROP HANDLERS ---
     
     function dragStart(e) {
-    // Buscar el contenedor .ficha-mejorada más cercano
-    const fichaContainer = e.target.closest('.ficha-mejorada');
+    const fichaContainer = e.target.closest('.ficha-mejorada, .ficha-compacta');
     if (!fichaContainer) return;
     
     const valor = fichaContainer.getAttribute('data-valor');
@@ -71,8 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
     fichaContainer.style.opacity = '0.5';
 }
 
-    function dragEnd(e) {
-    const fichaContainer = e.target.closest('.ficha-mejorada');
+function dragEnd(e) {
+    const fichaContainer = e.target.closest('.ficha-mejorada, .ficha-compacta');
     if (fichaContainer) {
         fichaContainer.style.opacity = '1';
     }
