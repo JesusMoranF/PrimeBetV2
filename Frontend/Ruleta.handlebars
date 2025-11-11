@@ -75,11 +75,6 @@
             <div class="game-col-left">
                 <img src="/Ruleta.webp" alt="Ruleta Europea" class="ruleta-imagen-pequena">
                 <div class="ruleta-indicador"></div>
-                
-                <!-- BOTÓN INICIAR DEBAJO DE LA RULETA -->
-                <div class="betting-controls-bottom">
-                    <button class="btn-spin" onclick="iniciarApuesta()">🎰 INICIAR APUESTA</button>
-                </div>
             </div>
 
             <div class="game-col-center" id="tablero-apuestas">
@@ -160,8 +155,8 @@
             
         </div>
 
-        <!-- FICHAS Y BOTÓN LIMPIAR ABAJO DEL TABLERO (MÁS COMPACTO) -->
-        <div class="controles-abajo-tablero-compacto">
+        <!-- TODO DEBAJO DEL TABLERO: FICHAS Y BOTONES -->
+        <div class="controles-debajo-tablero">
             <h3 style="color: var(--color-secondary); margin-bottom: 1rem; text-align: center; font-size: 1.3rem;">Selecciona tu ficha</h3>
             
             <div id="fichas-container" class="fichas-container-compacto">
@@ -191,7 +186,8 @@
                 </div>
             </div>
 
-            <div style="margin-top: 1rem; text-align: center;">
+            <div class="botones-accion">
+                <button class="btn-spin" onclick="iniciarApuesta()">🎰 INICIAR APUESTA</button>
                 <button class="btn btn-outline btn-limpiar-compacto" onclick="limpiarApuestas()">
                     🗑️ Limpiar Apuestas
                 </button>
@@ -202,6 +198,7 @@
 </div>
 
 <script src="/Ruleta.js"></script>
+
 
 
 
