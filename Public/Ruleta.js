@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ruletaImg = document.querySelector('.ruleta-imagen-pequena');
     const spinButton = document.querySelector('.btn-spin');
     const statusText = document.getElementById('estado-apuesta');
-    const fichas = document.querySelectorAll('.ficha');
+    const fichas = document.querySelectorAll('.ficha-mejorada');
     const tapeteRuleta = document.getElementById('tapete-ruleta'); // ✅ CAMBIO: Usar la tabla directamente
 
     // El orden de los números en la ruleta europea (para calcular la posición final)
@@ -59,17 +59,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- DRAG AND DROP HANDLERS ---
     
     function dragStart(e) {
-        const valor = e.target.getAttribute('data-valor');
-        const tipo = e.target.getAttribute('data-tipo');
-        e.dataTransfer.setData('text/plain', JSON.stringify({ valor, tipo }));
-        e.dataTransfer.effectAllowed = 'copy';
-        
-        e.target.style.opacity = '0.5';
-    }
+    // Buscar el contenedor .ficha-mejorada más cercano
+    const fichaContainer = e.target.closest('.ficha-mejorada');
+    if (!fichaContainer) return;
+    
+    const valor = fichaContainer.getAttribute('data-valor');
+    const tipo = fichaContainer.getAttribute('data-tipo');
+    e.dataTransfer.setData('text/plain', JSON.stringify({ valor, tipo }));
+    e.dataTransfer.effectAllowed = 'copy';
+    
+    fichaContainer.style.opacity = '0.5';
+}
 
     function dragEnd(e) {
-        e.target.style.opacity = '1';
+    const fichaContainer = e.target.closest('.ficha-mejorada');
+    if (fichaContainer) {
+        fichaContainer.style.opacity = '1';
     }
+}
 
     function dragOver(e) {
         e.preventDefault();
