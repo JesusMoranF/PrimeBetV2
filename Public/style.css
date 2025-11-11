@@ -327,3 +327,33 @@ details p strong em{color:var(--color-text)}
         height: 50px;
     }
 }
+.disposicion-juego-centrado {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.controles-abajo-tablero {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: rgba(20, 20, 20, 0.6);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive para layout centrado */
+@media (max-width: 992px) {
+    .disposicion-juego-centrado {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .game-col-left,
+    .game-col-center {
+        width: 100%;
+        max-width: 600px;
+    }
+}
