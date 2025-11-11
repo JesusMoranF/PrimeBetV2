@@ -142,19 +142,18 @@ details p strong em{color:var(--color-text)}
 
 
 .game-col-center {
-    /* El contenedor del tablero */
     padding: 10px;
-    background-color: #0c6a38; /* Color verde del paño */
+    background-color: #0c6a38;
     border: 5px solid #333;
     box-shadow: 0 0 20px rgba(0,0,0,0.5) inset;
-    overflow: auto; 
+    overflow: auto; 
     position: relative; 
 }
 
 #tapete-ruleta {
     width: 100%;
     border-collapse: collapse;
-    table-layout: fixed; 
+    table-layout: fixed; 
     font-size: 14px;
     font-weight: bold;
     color: white;
@@ -165,13 +164,13 @@ details p strong em{color:var(--color-text)}
     padding: 0;
     text-align: center;
     height: 40px;
-    cursor: grab; 
-    position: relative; /* CRUCIAL para que las fichas (absolute) se posicionen */
+    cursor: grab; 
+    position: relative;
     box-sizing: border-box;
     line-height: 40px;
-    min-width: 40px; 
-    z-index: 2;             
-    user-select: none;      
+    min-width: 40px; 
+    z-index: 2;             
+    user-select: none;      
     -webkit-user-select: none; 
 }
 
@@ -182,7 +181,7 @@ details p strong em{color:var(--color-text)}
 
 /* Celdas de apuestas externas */
 .twotoone, .dozen, .group-bet, .red-bet, .black-bet {
-    background-color: #084c28; /* Verde oscuro para las áreas */
+    background-color: #084c28;
     font-size: 0.8em;
     cursor: grab;
 }
@@ -190,8 +189,91 @@ details p strong em{color:var(--color-text)}
 /* Clases de utilidad */
 .empty-cell { border: none !important; background-color: transparent !important; }
 
-/* --- ESTILOS PARA LAS FICHAS (Drag and Drop) --- */
+/* --- FICHAS MEJORADAS CON IMÁGENES --- */
+.fichas-container-mejorado {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 20px 0;
+}
 
+.ficha-mejorada {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    cursor: grab;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    user-select: none;
+}
+
+.ficha-mejorada:active {
+    cursor: grabbing;
+}
+
+.ficha-mejorada:hover {
+    transform: scale(1.1) translateY(-5px);
+    filter: brightness(1.2);
+}
+
+.ficha-mejorada img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+}
+
+.ficha-mejorada span {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--color-text);
+    font-weight: bold;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.ficha-mejorada.ficha-allin img {
+    filter: drop-shadow(0 4px 12px rgba(217, 4, 41, 0.8));
+}
+
+.ficha-mejorada.ficha-allin:hover img {
+    filter: drop-shadow(0 6px 16px rgba(217, 4, 41, 1));
+}
+
+/* Estilos para las fichas que se colocan en el tablero (visuales) */
+.ficha-visual-normal, .ficha-visual-allin {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+    z-index: 100;
+    pointer-events: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.ficha-visual-normal {
+    background-color: gold;
+    color: black;
+}
+
+.ficha-visual-allin {
+    background-color: darkred;
+    color: white;
+    border: 2px solid gold;
+}
+
+/* --- ESTILOS ANTIGUOS DE FICHAS (MANTENER PARA COMPATIBILIDAD) --- */
 .fichas-container {
     display: flex;
     justify-content: center;
@@ -202,7 +284,7 @@ details p strong em{color:var(--color-text)}
 .ficha {
     width: 60px;
     height: 60px;
-    background-color: gold; 
+    background-color: gold; 
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -210,7 +292,7 @@ details p strong em{color:var(--color-text)}
     color: black;
     font-weight: bold;
     font-size: 16px;
-    cursor: grab; 
+    cursor: grab; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
     user-select: none;
 }
@@ -222,136 +304,26 @@ details p strong em{color:var(--color-text)}
     border: 3px solid gold;
 }
 
-/* Estilos para las fichas que se colocan en el tablero (visuales) */
-.ficha-visual-normal, .ficha-visual-allin {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 8px;
-    font-weight: bold;
-    z-index: 100;
-    pointer-events: none; 
-    transition: none; 
+/* Responsive para fichas */
+@media (max-width: 768px) {
+    .ficha-mejorada {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .ficha-mejorada span {
+        font-size: 0.8rem;
+        bottom: -20px;
+    }
+
+    .fichas-container-mejorado {
+        gap: 15px;
+    }
 }
 
-.ficha-visual-normal {
-    background-color: gold;
-    color: black;
-}
-
-.ficha-visual-allin {
-    background-color: darkred;
-    color: white;
-    border: 1px solid gold;
-}
-.game-col-center {
-    /* El contenedor del tablero */
-    padding: 10px;
-    background-color: #0c6a38; /* Color verde del paño */
-    border: 5px solid #333;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5) inset;
-    overflow: auto; 
-    position: relative; 
-}
-
-#tapete-ruleta {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed; 
-    font-size: 14px;
-    font-weight: bold;
-    color: white;
-}
-
-#tapete-ruleta td {
-    border: 2px solid #555;
-    padding: 0;
-    text-align: center;
-    height: 40px;
-    cursor: grab; 
-    position: relative; /* CRUCIAL para que las fichas (absolute) se posicionen */
-    box-sizing: border-box;
-    line-height: 40px;
-    min-width: 40px; 
-    z-index: 2;             
-    user-select: none;      
-    -webkit-user-select: none; 
-}
-
-/* Colores de los números */
-.zero { background-color: #0c6a38; color: gold; font-size: 1.2em; }
-.red { background-color: #d90f0f; }
-.black { background-color: #303030; }
-
-/* Celdas de apuestas externas */
-.twotoone, .dozen, .group-bet, .red-bet, .black-bet {
-    background-color: #084c28; /* Verde oscuro para las áreas */
-    font-size: 0.8em;
-    cursor: grab;
-}
-
-/* Clases de utilidad */
-.empty-cell { border: none !important; background-color: transparent !important; }
-
-/* --- ESTILOS PARA LAS FICHAS (Drag and Drop) --- */
-
-.fichas-container {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 30px;
-}
-
-.ficha {
-    width: 60px;
-    height: 60px;
-    background-color: gold; 
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: black;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: grab; 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-    user-select: none;
-}
-
-.ficha.all-in {
-    background-color: darkred;
-    color: white;
-    font-size: 18px;
-    border: 3px solid gold;
-}
-
-/* Estilos para las fichas que se colocan en el tablero (visuales) */
-.ficha-visual-normal, .ficha-visual-allin {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 8px;
-    font-weight: bold;
-    z-index: 100;
-    pointer-events: none; 
-    transition: none; 
-}
-
-.ficha-visual-normal {
-    background-color: gold;
-    color: black;
-}
-
-.ficha-visual-allin {
-    background-color: darkred;
-    color: white;
-    border: 1px solid gold;
+@media (max-width: 576px) {
+    .ficha-mejorada {
+        width: 50px;
+        height: 50px;
+    }
 }
