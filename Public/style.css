@@ -141,21 +141,20 @@ details p strong em{color:var(--color-text)}
 .tarjeta-pagina-completa .volver a:hover{color:var(--color-secondary-dark)}
 
 
-/* --- ESTILOS PARA EL TAPETE DE RULETA (roulette-table) --- */
-
 .game-col-center {
     /* El contenedor del tablero */
     padding: 10px;
     background-color: #0c6a38; /* Color verde del paño */
     border: 5px solid #333;
     box-shadow: 0 0 20px rgba(0,0,0,0.5) inset;
-    overflow: auto; 
+    overflow: auto; 
+    position: relative; 
 }
 
 #tapete-ruleta {
     width: 100%;
     border-collapse: collapse;
-    table-layout: fixed; 
+    table-layout: fixed; 
     font-size: 14px;
     font-weight: bold;
     color: white;
@@ -166,14 +165,14 @@ details p strong em{color:var(--color-text)}
     padding: 0;
     text-align: center;
     height: 40px;
-    cursor: grab; 
+    cursor: grab; 
     position: relative; /* CRUCIAL para que las fichas (absolute) se posicionen */
     box-sizing: border-box;
     line-height: 40px;
-    min-width: 40px; 
-    z-index: 2;             /* Asegura que la celda esté encima de cualquier imagen de fondo del div principal */
-    user-select: none;      /* Evita problemas de selección de texto */
-    -webkit-user-select: none; /* Compatibilidad con navegadores */
+    min-width: 40px; 
+    z-index: 2;             
+    user-select: none;      
+    -webkit-user-select: none; 
 }
 
 /* Colores de los números */
@@ -203,7 +202,7 @@ details p strong em{color:var(--color-text)}
 .ficha {
     width: 60px;
     height: 60px;
-    background-color: gold; 
+    background-color: gold; 
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -211,7 +210,7 @@ details p strong em{color:var(--color-text)}
     color: black;
     font-weight: bold;
     font-size: 16px;
-    cursor: grab; 
+    cursor: grab; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
     user-select: none;
 }
@@ -248,9 +247,4 @@ details p strong em{color:var(--color-text)}
     background-color: darkred;
     color: white;
     border: 1px solid gold;
-}
-
-.game-col-center {
-    /* ... (código existente) ... */
-    position: relative; /* CRUCIAL para que el z-index funcione correctamente */
 }
