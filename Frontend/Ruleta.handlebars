@@ -163,17 +163,48 @@
             
         </div>
 
-        <!-- CONTENEDOR DE FICHAS -->
-        <div id="fichas-container" class="fichas-container">
-            <div class="ficha" draggable="true" data-valor="10" data-tipo="normal">10</div>
-            <div class="ficha" draggable="true" data-valor="50" data-tipo="normal">50</div>
-            <div class="ficha" draggable="true" data-valor="100" data-tipo="normal">100</div>
-            <div class="ficha" draggable="true" data-valor="500" data-tipo="normal">500</div>
-            <div class="ficha" draggable="true" data-valor="1000" data-tipo="normal">1k</div>
-            <div class="ficha all-in" draggable="true" data-valor="ALLIN" data-tipo="allin">ALL IN</div>
+        </div> <!-- Cierre de disposicion-juego-2col -->
+
+        <!-- CONTENEDOR DE FICHAS Y CONTROLES -->
+        <div style="margin-top: 2rem; text-align: center;">
+            <h3 style="color: var(--color-secondary); margin-bottom: 1rem;">Selecciona tu ficha</h3>
+            
+            <div id="fichas-container" class="fichas-container-mejorado">
+                <div class="ficha-mejorada" draggable="true" data-valor="10" data-tipo="normal">
+                    <img src="/ficha_10.png" alt="Ficha 10" draggable="false">
+                    <span>$10</span>
+                </div>
+                <div class="ficha-mejorada" draggable="true" data-valor="50" data-tipo="normal">
+                    <img src="/ficha_50.png" alt="Ficha 50" draggable="false">
+                    <span>$50</span>
+                </div>
+                <div class="ficha-mejorada" draggable="true" data-valor="100" data-tipo="normal">
+                    <img src="/ficha_100.png" alt="Ficha 100" draggable="false">
+                    <span>$100</span>
+                </div>
+                <div class="ficha-mejorada" draggable="true" data-valor="500" data-tipo="normal">
+                    <img src="/ficha_500.png" alt="Ficha 500" draggable="false">
+                    <span>$500</span>
+                </div>
+                <div class="ficha-mejorada" draggable="true" data-valor="1000" data-tipo="normal">
+                    <img src="/ficha_1k.png" alt="Ficha 1k" draggable="false">
+                    <span>$1k</span>
+                </div>
+                <div class="ficha-mejorada ficha-allin" draggable="true" data-valor="ALLIN" data-tipo="allin">
+                    <img src="/ficha_allin.png" alt="All In" draggable="false">
+                    <span>ALL IN</span>
+                </div>
+            </div>
+
+            <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button class="btn-spin" onclick="iniciarApuesta()">INICIAR APUESTA</button>
+                <button class="btn btn-outline" onclick="limpiarApuestas()">
+                     Limpiar Apuestas
+                </button>
+            </div>
         </div>
-        <!-- FIN CONTENEDOR DE FICHAS -->
     </div>
 </div>
 
 <script src="/Ruleta.js"></script>
+
