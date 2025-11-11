@@ -218,11 +218,11 @@ function dragEnd(e) {
             };
         });
         
-        console.log('🎰 Enviando apuestas:', apuestasParaEnviar);
+        console.log(' Enviando apuestas:', apuestasParaEnviar);
         
         spinButton.disabled = true;
         spinButton.textContent = 'GIRANDO...';
-        statusText.textContent = '🎰 Giro en curso...';
+        statusText.textContent = ' Giro en curso...';
 
         try {
             const response = await fetch('/apuesta', {
@@ -260,7 +260,7 @@ function dragEnd(e) {
             const girosCompletos = 5 * 360; 
             const finalRotation = girosCompletos + targetGrados;
 
-            console.log('🎡 Rotando ruleta a:', finalRotation, 'grados');
+            console.log(' Rotando ruleta a:', finalRotation, 'grados');
 
             if (!ruletaImg) {
                 console.error('❌ No se encontró la imagen de la ruleta');
@@ -303,7 +303,7 @@ function dragEnd(e) {
         }
         
         limpiarApuestasVisuales();
-        statusText.textContent = '🗑️ Apuestas limpiadas';
+        statusText.textContent = ' Apuestas limpiadas';
         console.log('✅ Apuestas limpiadas, dinero devuelto:', dineroADevolver);
     }
 
