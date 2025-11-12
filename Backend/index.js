@@ -46,18 +46,17 @@ numeroGanador: { type: Number, default: null }
 
 const Usuario = mongoose.model('Usuario', UsuarioSchema);
 
-// Definición de la ruleta europea (color por número)
 const RUEDA = {
 0: { color: 'verde' },
-1: { color: 'negro' }, 2: { color: 'rojo' }, 3: { color: 'negro' }, 4: { color: 'rojo' },
-5: { color: 'negro' }, 6: { color: 'rojo' }, 7: { color: 'negro' }, 8: { color: 'rojo' },
-9: { color: 'negro' }, 10: { color: 'rojo' }, 11: { color: 'negro' }, 12: { color: 'rojo' },
+1: { color: 'rojo' }, 2: { color: 'negro' }, 3: { color: 'rojo' }, 4: { color: 'negro' },
+5: { color: 'rojo' }, 6: { color: 'negro' }, 7: { color: 'rojo' }, 8: { color: 'negro' },
+9: { color: 'rojo' }, 10: { color: 'negro' }, 11: { color: 'negro' }, 12: { color: 'rojo' },
 13: { color: 'negro' }, 14: { color: 'rojo' }, 15: { color: 'negro' }, 16: { color: 'rojo' },
-17: { color: 'negro' }, 18: { color: 'rojo' }, 19: { color: 'negro' }, 20: { color: 'rojo' },
-21: { color: 'negro' }, 22: { color: 'rojo' }, 23: { color: 'negro' }, 24: { color: 'rojo' },
-25: { color: 'negro' }, 26: { color: 'rojo' }, 27: { color: 'negro' }, 28: { color: 'rojo' },
+17: { color: 'negro' }, 18: { color: 'rojo' }, 19: { color: 'rojo' }, 20: { color: 'negro' },
+21: { color: 'rojo' }, 22: { color: 'negro' }, 23: { color: 'rojo' }, 24: { color: 'negro' },
+25: { color: 'rojo' }, 26: { color: 'negro' }, 27: { color: 'rojo' }, 28: { color: 'negro' },
 29: { color: 'negro' }, 30: { color: 'rojo' }, 31: { color: 'negro' }, 32: { color: 'rojo' },
-33: { color: 'negro' }, 34: { color: 'rojo' }, 35: { color: 'negro' }, 36: { color: 'rojo' },
+33: { color: 'negro' }, 34: { color: 'rojo' }, 35: { color: 'negro' }, 36: { color: 'rojo' }
 };
 
 function generarResultado() {
@@ -135,23 +134,20 @@ function calcularGananciasTotales(apuestas, resultado) {
     };
 
     apuestas.forEach(apuesta => {
-        let gananciaApuesta = -apuesta.monto; // Inicialmente, la pérdida es el monto apostado
-        const pagoRatio = PAGOS[apuesta.tipo] || 0; 
-        
-        const detalle = `Apuesta $${apuesta.monto.toLocaleString('es-CL')} a ${apuesta.tipo}: ${apuesta.valor}`;
-        
-        if (esGanadora(apuesta, resultado)) {
-            // Monto bruto = Apuesta * (Ratio + 1) (el +1 es la devolución de la apuesta inicial)
-            const montoGanadoBruto = apuesta.monto * (pagoRatio + 1);
-            gananciaApuesta = montoGanadoBruto;
-            detallesTransaccion.push(`${detalle} Gana (+${montoGanadoBruto.toLocaleString('es-CL')})`);
-        } else {
-            gananciaApuesta = -apuesta.monto; // La pérdida es el monto apostado
-            detallesTransaccion.push(`${detalle} Pierde (-${apuesta.monto.toLocaleString('es-CL')})`);
-        }
-        
-        gananciaNeta += gananciaApuesta; 
-    });
+    const pagoRatio = PAGOS[apuesta.tipo] || 0; 
+    const detalle = `Apuesta $${apuesta.monto.toLocaleString('es-CL')} a ${apuesta.tipo}: ${apuesta.valor}`;
+    
+    if (esGanadora(apuesta, resultado)) {
+        // GANANCIA NETA = (Apuesta × Ratio) - solo la ganancia, NO la devolución
+        const gananciaPura = apuesta.monto * pagoRatio;
+        gananciaNeta += gananciaPura; // ✅ Suma solo la ganancia neta
+        detallesTransaccion.push(`${detalle} Gana (+${gananciaPura.toLocaleString('es-CL')})`);
+    } else {
+        // PÉRDIDA = -Monto apostado
+        gananciaNeta -= apuesta.monto; // ✅ Resta la apuesta perdida
+        detallesTransaccion.push(`${detalle} Pierde (-${apuesta.monto.toLocaleString('es-CL')})`);
+    }
+});
 
     return {
         gananciaNeta: gananciaNeta, // Valor neto a sumar al saldo (puede ser negativo)
@@ -505,3 +501,4 @@ app.listen(port, () => {
 console.log(`💫 Servidor corriendo en http://localhost:${port}`);
 console.log('🟢 Vistas configuradas en:', path.join(__dirname, '../Frontend'));
 });
+
