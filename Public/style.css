@@ -106,25 +106,80 @@ ul{list-style:none}
 @media (max-width:576px){.game-col-left,.game-col-center,.game-col-right{padding:1rem}.ruleta-imagen-pequena{max-width:200px}}
 @media (max-width:480px){.profile-image-container{flex-direction:column}.profile-img-small{max-width:100%}.buttons-row{flex-direction:column}}
 .contenedor-ruleta-principal{display:flex;max-width:var(--max-width);width:95%;margin:0 auto;gap:1.5rem;min-height:calc(100vh - var(--header-height) - 4rem);padding:1.5rem 0}
-.panel-historial-lateral{flex:0 0 360px;padding:1.5rem;background:rgba(20,20,20,.8);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,255,.1);align-self:flex-start}
+.panel-historial-lateral{
+    flex:0 0 360px;
+    padding:1.5rem;
+    background:rgba(20,20,20,.8);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-lg);
+    border:1px solid rgba(255,255,255,.1);
+    align-self:flex-start;
+    /* Contenedor scrolleable si es necesario */
+    max-height: calc(100vh - var(--header-height) - 3rem); /* Altura máxima razonable */
+    overflow-y: auto;
+}
 .tarjeta-juego{flex:1;padding:2rem;max-width:unset;margin:0}
 .disposicion-juego-2col{display:flex;gap:2rem;margin-top:1rem;width:100%;align-items:flex-start}
 .disposicion-juego-2col .game-col-left{flex:1}
 .disposicion-juego-2col .game-col-center{flex:2.5}
-.historial-grid{display:flex;gap:1rem;margin-top:1rem;width:100%}
-.historial-columna{flex:1 1 50%;display:flex;flex-direction:column}
+.historial-grid{display:flex;gap:1rem;margin-top:1rem;width:100%;}
+.historial-columna{flex:1 1 50%;display:flex;flex-direction:column;min-width:150px; /* Asegura un ancho mínimo para cada columna */ }
 .historial-columna h3{text-align:center;font-size:1.1rem;color:var(--color-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:0;margin-bottom:.5rem;height:1.2em}
-.tabla-apuestas,.tabla-resultados{width:100%;border-collapse:collapse;margin-top:.5rem;table-layout:fixed}
-.tabla-apuestas th:first-child,.tabla-apuestas td:first-child,.tabla-resultados th:first-child,.tabla-resultados td:first-child{width:30px!important;max-width:30px!important;padding-left:0!important;padding-right:0!important}
-.tabla-apuestas th,.tabla-resultados th{padding:.5rem .3rem;font-size:.9rem;height:40px;box-sizing:border-box}
-.tabla-apuestas td,.tabla-resultados td{padding:.5rem .3rem;font-size:.85rem;height:50px;line-height:1.1;white-space:normal;overflow:hidden;text-overflow:ellipsis}
+.tabla-apuestas,.tabla-resultados{width:100%;border-collapse:collapse;margin-top:.5rem;table-layout:auto; /* Cambiado a auto para que el contenido determine el ancho */ }
+.tabla-apuestas th:first-child,.tabla-apuestas td:first-child,.tabla-resultados th:first-child,.tabla-resultados td:first-child{
+    width:auto!important;
+    max-width:unset!important;
+    padding-left:.5rem!important;
+    padding-right:.5rem!important;
+    text-align: left; /* Alineación a la izquierda para el texto de la apuesta/resultado */
+}
+
+/* *** MODIFICACIONES EN LAS TABLAS DE APUESTAS Y RESULTADOS *** */
+.tabla-apuestas th,.tabla-resultados th{
+    padding:.75rem .5rem; /* Aumento de padding para más espacio */
+    font-size:.95rem; /* Fuente ligeramente más grande */
+    height:auto;
+    box-sizing:border-box;
+    white-space: nowrap; /* Evita que el encabezado se rompa */
+}
+.tabla-apuestas th:first-child { width: 65% !important; } /* Apuesta toma más espacio */
+.tabla-apuestas th:last-child { width: 35% !important; } /* Neto toma menos espacio */
+
+/* Nuevos estilos para los datos */
+.tabla-apuestas td,.tabla-resultados td{
+    padding:.7rem .5rem; /* Aumento de padding en el cuerpo de la tabla */
+    font-size:.9rem; /* Fuente un poco más grande para mejor lectura */
+    height:auto;
+    line-height:1.2;
+    white-space: normal; /* Permite que el texto se rompa si es muy largo (aunque con el ancho mayor no debería) */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center; /* Alineación del contenido */
+}
+.tabla-apuestas td:first-child,.tabla-resultados td:first-child {
+    text-align: left; /* Alinea el detalle de la apuesta/resultado a la izquierda */
+    font-weight: 500;
+}
+
+/* Asegurando que los encabezados reflejen solo "Apuesta" y "Neto/Resultado" (tendrás que actualizar tu HTML) */
+.latest-bets h3 { content: "Últimas Apuestas"; }
+.latest-results h3 { content: "Últimos Resultados"; }
+/* Los th tienen que ser modificados en el HTML a <th>Apuesta</th> y <th>Neto</th>.
+   Si no puedes cambiar el HTML, puedes usar ':nth-child(n)' para ocultar/modificar,
+   pero lo ideal es cambiar el HTML. */
+
 .apuesta-estado.success{color:var(--color-success)!important;font-weight:700}
 .apuesta-estado.danger{color:var(--color-danger)!important;font-weight:700}
 .resultado-numero.color-rojo{color:var(--color-danger)!important;background:rgba(217,4,41,.2);border:1px solid var(--color-danger);border-radius:var(--radius-xs)}
 .resultado-numero.color-negro{color:var(--color-text)!important;background:rgba(0,0,0,.5);border:1px solid var(--color-text-muted);border-radius:var(--radius-xs)}
 .resultado-numero.color-verde{color:var(--color-success)!important;background:rgba(39,174,96,.2);border:1px solid var(--color-success);border-radius:var(--radius-xs)}
 .ruleta-indicador{position:absolute;top:15px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-top:18px solid var(--color-danger);z-index:20;filter:drop-shadow(0 0 5px rgba(0,0,0,.8))}
-@media (max-width:992px){.contenedor-ruleta-principal{flex-direction:column;align-items:center}.panel-historial-lateral{order:2;flex:1;width:90%;max-width:600px}.tarjeta-juego{order:1;width:90%}.historial-grid{flex-direction:column}}
+@media (max-width:992px){.contenedor-ruleta-principal{flex-direction:column;align-items:center}.panel-historial-lateral{order:2;flex:1;width:90%;max-width:600px; max-height: 400px; /* Limita la altura en móvil para evitar que ocupe toda la pantalla */ }.tarjeta-juego{order:1;width:90%}.historial-grid{flex-direction:row; /* Se mantiene en fila en tablets si hay espacio */ flex-wrap: wrap; justify-content: space-around;}.historial-columna{min-width: unset; flex: 1 1 45%;}}
+@media (max-width: 576px) {
+    .historial-grid {
+        flex-direction: column; /* Columna en móviles */
+    }
+}
 details{background-color:var(--color-bg-card-light);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-sm);margin-bottom:1rem;overflow:hidden}
 summary{padding:1rem 1.5rem;font-weight:700;background-color:var(--color-bg-card);color:var(--color-secondary);cursor:pointer;outline:none;list-style:none;transition:background-color var(--transition-fast)}
 summary:hover{background-color:#2a2a2a}
@@ -141,298 +196,296 @@ details p strong em{color:var(--color-text)}
 .tarjeta-pagina-completa .volver a:hover{color:var(--color-secondary-dark)}
 
 
-/* --- ESTILOS DEL TABLERO DE RULETA --- */
 .game-col-center {
-    padding: 10px;
-    background-color: #0c6a38;
-    border: 5px solid #333;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5) inset;
-    overflow: auto; 
-    position: relative;
-    flex: 2.8; /* Tablero más grande */
+    padding: 10px;
+    background-color: #0c6a38;
+    border: 5px solid #333;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5) inset;
+    overflow: auto; 
+    position: relative;
+    flex: 2.8; /* Tablero más grande */
 }
 
 .game-col-left {
-    flex: 1.2; /* Ruleta más pequeña */
+    flex: 1.2; /* Ruleta más pequeña */
 }
 
 #tapete-ruleta {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed; 
-    font-size: 14px;
-    font-weight: bold;
-    color: white;
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; 
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
 }
 
 #tapete-ruleta td {
-    border: 2px solid #555;
-    padding: 0;
-    text-align: center;
-    height: 40px;
-    cursor: grab; 
-    position: relative;
-    box-sizing: border-box;
-    line-height: 40px;
-    min-width: 40px; 
-    z-index: 2;             
-    user-select: none;      
-    -webkit-user-select: none; 
+    border: 2px solid #555;
+    padding: 0;
+    text-align: center;
+    height: 40px;
+    cursor: grab; 
+    position: relative;
+    box-sizing: border-box;
+    line-height: 40px;
+    min-width: 40px; 
+    z-index: 2;             
+    user-select: none;      
+    -webkit-user-select: none; 
 }
 
-/* Colores de los números */
+
 .zero { background-color: #0c6a38; color: gold; font-size: 1.2em; }
 .red { background-color: #d90f0f; }
 .black { background-color: #303030; }
 
-/* Celdas de apuestas externas */
+
 .twotoone, .dozen, .group-bet, .red-bet, .black-bet {
-    background-color: #084c28;
-    font-size: 0.8em;
-    cursor: grab;
+    background-color: #084c28;
+    font-size: 0.8em;
+    cursor: grab;
 }
 
-/* Clases de utilidad */
+
 .empty-cell { border: none !important; background-color: transparent !important; }
 
-/* --- CONTROLES DEBAJO DEL TABLERO --- */
+
 .controles-debajo-tablero {
-    margin-top: 1.5rem;
-    padding: 1.5rem;
-    background: rgba(20, 20, 20, 0.5);
-    border-radius: var(--radius-md);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(20, 20, 20, 0.5);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .fichas-container-compacto {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin: 0 auto 1.5rem;
-    max-width: 700px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 0 auto 1.5rem;
+    max-width: 700px;
 }
 
 .ficha-compacta {
-    position: relative;
-    width: 60px;
-    height: 60px;
-    cursor: grab;
-    transition: transform 0.2s ease, filter 0.2s ease;
-    user-select: none;
+    position: relative;
+    width: 60px;
+    height: 60px;
+    cursor: grab;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    user-select: none;
 }
 
 .ficha-compacta:active {
-    cursor: grabbing;
+    cursor: grabbing;
 }
 
 .ficha-compacta:hover {
-    transform: scale(1.15) translateY(-3px);
-    filter: brightness(1.2);
+    transform: scale(1.15) translateY(-3px);
+    filter: brightness(1.2);
 }
 
 .ficha-compacta img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    pointer-events: none;
-    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.5));
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.5));
 }
 
 .ficha-compacta span {
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: var(--color-text);
-    font-weight: bold;
-    font-size: 0.75rem;
-    white-space: nowrap;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--color-text);
+    font-weight: bold;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .ficha-compacta.ficha-allin img {
-    filter: drop-shadow(0 3px 8px rgba(217, 4, 41, 0.8));
+    filter: drop-shadow(0 3px 8px rgba(217, 4, 41, 0.8));
 }
 
 .ficha-compacta.ficha-allin:hover img {
-    filter: drop-shadow(0 5px 12px rgba(217, 4, 41, 1));
+    filter: drop-shadow(0 5px 12px rgba(217, 4, 41, 1));
 }
 
-/* Botones de acción lado a lado */
+
 .botones-accion {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .btn-limpiar-compacto {
-    padding: 1rem 2rem;
-    font-size: 1rem;
+    padding: 1rem 2rem;
+    font-size: 1rem;
 }
 
-/* Estilos para las fichas que se colocan en el tablero (visuales) */
+
 .ficha-visual-normal, .ficha-visual-allin {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    font-weight: bold;
-    z-index: 100;
-    pointer-events: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+    z-index: 100;
+    pointer-events: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
 }
 
 .ficha-visual-normal {
-    background-color: gold;
-    color: black;
+    background-color: gold;
+    color: black;
 }
 
 .ficha-visual-allin {
-    background-color: darkred;
-    color: white;
-    border: 2px solid gold;
+    background-color: darkred;
+    color: white;
+    border: 2px solid gold;
 }
 
-/* --- ESTILOS ANTIGUOS (MANTENER PARA COMPATIBILIDAD) --- */
 .fichas-container {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
 }
 
 .ficha {
-    width: 60px;
-    height: 60px;
-    background-color: gold; 
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: black;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: grab; 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-    user-select: none;
+    width: 60px;
+    height: 60px;
+    background-color: gold; 
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: grab; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    user-select: none;
 }
 
 .ficha.all-in {
-    background-color: darkred;
-    color: white;
-    font-size: 18px;
-    border: 3px solid gold;
+    background-color: darkred;
+    color: white;
+    font-size: 18px;
+    border: 3px solid gold;
 }
 
 .fichas-container-mejorado {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin: 0 auto;
-    max-width: 800px;
-    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 20px 0;
 }
 
 .ficha-mejorada {
-    position: relative;
-    width: 80px;
-    height: 80px;
-    cursor: grab;
-    transition: transform 0.2s ease, filter 0.2s ease;
-    user-select: none;
+    position: relative;
+    width: 80px;
+    height: 80px;
+    cursor: grab;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    user-select: none;
 }
 
 .ficha-mejorada:active {
-    cursor: grabbing;
+    cursor: grabbing;
 }
 
 .ficha-mejorada:hover {
-    transform: scale(1.1) translateY(-5px);
-    filter: brightness(1.2);
+    transform: scale(1.1) translateY(-5px);
+    filter: brightness(1.2);
 }
 
 .ficha-mejorada img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    pointer-events: none;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
 }
 
 .ficha-mejorada span {
-    position: absolute;
-    bottom: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: var(--color-text);
-    font-weight: bold;
-    font-size: 0.9rem;
-    white-space: nowrap;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--color-text);
+    font-weight: bold;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .ficha-mejorada.ficha-allin img {
-    filter: drop-shadow(0 4px 12px rgba(217, 4, 41, 0.8));
+    filter: drop-shadow(0 4px 12px rgba(217, 4, 41, 0.8));
 }
 
 .ficha-mejorada.ficha-allin:hover img {
-    filter: drop-shadow(0 6px 16px rgba(217, 4, 41, 1));
+    filter: drop-shadow(0 6px 16px rgba(217, 4, 41, 1));
 }
 
-/* --- RESPONSIVE --- */
+
 @media (max-width: 992px) {
-    .disposicion-juego-2col {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .game-col-left,
-    .game-col-center {
-        width: 100%;
-        max-width: 600px;
-        flex: unset;
-    }
+    .disposicion-juego-2col {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .game-col-left,
+    .game-col-center {
+        width: 100%;
+        max-width: 600px;
+        flex: unset;
+    }
 }
 
 @media (max-width: 768px) {
-    .ficha-compacta,
-    .ficha-mejorada {
-        width: 50px;
-        height: 50px;
-    }
-    
-    .ficha-compacta span,
-    .ficha-mejorada span {
-        font-size: 0.7rem;
-        bottom: -18px;
-    }
+    .ficha-compacta,
+    .ficha-mejorada {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .ficha-compacta span,
+    .ficha-mejorada span {
+        font-size: 0.7rem;
+        bottom: -18px;
+    }
 
-    .fichas-container-compacto {
-        gap: 10px;
-    }
+    .fichas-container-compacto {
+        gap: 10px;
+    }
 
-    .botones-accion {
-        flex-direction: column;
-    }
+    .botones-accion {
+        flex-direction: column;
+    }
 
-    .btn-spin, 
-    .btn-limpiar-compacto {
-        width: 100%;
-    }
+    .btn-spin, 
+    .btn-limpiar-compacto {
+        width: 100%;
+    }
 }
 
 @media (max-width: 576px) {
-    .ficha-compacta,
-    .ficha-mejorada {
-        width: 45px;
-        height: 45px;
-    }
+    .ficha-compacta,
+    .ficha-mejorada {
+        width: 45px;
+        height: 45px;
+    }
 }
