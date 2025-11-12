@@ -72,86 +72,75 @@
 
         <div class="disposicion-juego-2col">
             
-            <div class="game-col-left">
-                <img src="/Ruleta.webp" alt="Ruleta Europea" class="ruleta-imagen-pequena">
-                <div class="ruleta-indicador"></div>
-            </div>
-
             <div class="game-col-center" id="tablero-apuestas">
-                <table id="tapete-ruleta" class="roulette-table">
-                    <tbody>
-                        <!-- Fila del Cero -->
-                        <tr>
-                            <td rowspan="3" id="n0" class="zero">0</td>
-                            <!-- Tercera Columna (superior) -->
-                            <td id="n3" class="black">3</td>
-                            <td id="n6" class="red">6</td>
-                            <td id="n9" class="black">9</td>
-                            <td id="n12" class="red">12</td>
-                            <td id="n15" class="black">15</td>
-                            <td id="n18" class="red">18</td>
-                            <td id="n21" class="red">21</td>
-                            <td id="n24" class="black">24</td>
-                            <td id="n27" class="red">27</td>
-                            <td id="n30" class="black">30</td>
-                            <td id="n33" class="red">33</td>
-                            <td id="n36" class="black">36</td>
-                            <td id="2to1_3" class="twotoone">2 to 1</td>
-                        </tr>
-                        <tr>
-                            <!-- Segunda Columna (medio) -->
-                            <td id="n2" class="red">2</td>
-                            <td id="n5" class="black">5</td>
-                            <td id="n8" class="red">8</td>
-                            <td id="n11" class="black">11</td>
-                            <td id="n14" class="red">14</td>
-                            <td id="n17" class="black">17</td>
-                            <td id="n20" class="black">20</td>
-                            <td id="n23" class="red">23</td>
-                            <td id="n26" class="black">26</td>
-                            <td id="n29" class="black">29</td>
-                            <td id="n32" class="red">32</td>
-                            <td id="n35" class="black">35</td>
-                            <td id="2to1_2" class="twotoone">2 to 1</td>
-                        </tr>
-                        <tr>
-                            <!-- Primera Columna (inferior) -->
-                            <td id="n1" class="red">1</td>
-                            <td id="n4" class="black">4</td>
-                            <td id="n7" class="red">7</td>
-                            <td id="n10" class="black">10</td>
-                            <td id="n13" class="black">13</td>
-                            <td id="n16" class="red">16</td>
-                            <td id="n19" class="red">19</td>
-                            <td id="n22" class="black">22</td>
-                            <td id="n25" class="red">25</td>
-                            <td id="n28" class="black">28</td>
-                            <td id="n31" class="black">31</td>
-                            <td id="n34" class="red">34</td>
-                            <td id="2to1_1" class="twotoone">2 to 1</td>
-                        </tr>
-                        <!-- Fila de Apuestas por Docenas -->
-                        <tr>
-                            <td colspan="1" class="empty-cell"></td>
-                            <td colspan="4" id="1st12" class="dozen">1st 12</td>
-                            <td colspan="4" id="2nd12" class="dozen">2nd 12</td>
-                            <td colspan="4" id="3rd12" class="dozen">3rd 12</td>
-                            <td colspan="1" class="empty-cell"></td>
-                        </tr>
-                        <!-- Fila de Apuestas Externas -->
-                        <tr>
-                            <td colspan="1" class="empty-cell"></td>
-                            <td colspan="2" id="1a18" class="group-bet">1-18</td>
-                            <td colspan="2" id="impar" class="group-bet">IMPAR</td>
-                            <td colspan="2" id="negro" class="black-bet">NEGRO</td>
-                            <td colspan="2" id="rojo" class="red-bet">ROJO</td>
-                            <td colspan="2" id="par" class="group-bet">PAR</td>
-                            <td colspan="2" id="19a36" class="group-bet">19-36</td>
-                            <td colspan="1" class="empty-cell"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+    <table id="tapete-ruleta" class="roulette-table">
+        <tbody>
+            <tr>
+                <td rowspan="3" id="n0" class="zero">0</td>
+                <td id="n3" class="red">3</td>
+                <td id="n6" class="black">6</td>
+                <td id="n9" class="red">9</td>
+                <td id="n12" class="black">12</td>
+                <td id="n15" class="red">15</td>
+                <td id="n18" class="black">18</td>
+                <td id="n21" class="red">21</td>
+                <td id="n24" class="black">24</td>
+                <td id="n27" class="red">27</td>
+                <td id="n30" class="black">30</td>
+                <td id="n33" class="red">33</td>
+                <td id="n36" class="black">36</td>
+                <td id="2to1_3" class="twotoone">2 to 1</td>
+            </tr>
+            <tr>
+                <td id="n2" class="black">2</td>
+                <td id="n5" class="red">5</td>
+                <td id="n8" class="black">8</td>
+                <td id="n11" class="red">11</td>
+                <td id="n14" class="black">14</td>
+                <td id="n17" class="red">17</td>
+                <td id="n20" class="black">20</td>
+                <td id="n23" class="red">23</td>
+                <td id="n26" class="black">26</td>
+                <td id="n29" class="black">29</td>
+                <td id="n32" class="red">32</td>
+                <td id="n35" class="black">35</td>
+                <td id="2to1_2" class="twotoone">2 to 1</td>
+            </tr>
+            <tr>
+                <td id="n1" class="red">1</td>
+                <td id="n4" class="black">4</td>
+                <td id="n7" class="red">7</td>
+                <td id="n10" class="black">10</td>
+                <td id="n13" class="black">13</td>
+                <td id="n16" class="red">16</td>
+                <td id="n19" class="red">19</td>
+                <td id="n22" class="black">22</td>
+                <td id="n25" class="red">25</td>
+                <td id="n28" class="black">28</td>
+                <td id="n31" class="black">31</td>
+                <td id="n34" class="red">34</td>
+                <td id="2to1_1" class="twotoone">2 to 1</td>
+            </tr>
+            <tr>
+                <td colspan="1" class="empty-cell"></td>
+                <td colspan="4" id="1st12" class="dozen">1st 12</td>
+                <td colspan="4" id="2nd12" class="dozen">2nd 12</td>
+                <td colspan="4" id="3rd12" class="dozen">3rd 12</td>
+                <td colspan="1" class="empty-cell"></td>
+            </tr>
+            <tr>
+                <td colspan="1" class="empty-cell"></td>
+                <td colspan="2" id="1a18" class="group-bet">1-18</td>
+                <td colspan="2" id="impar" class="group-bet">IMPAR</td>
+                <td colspan="2" id="negro" class="black-bet">NEGRO</td>
+                <td colspan="2" id="rojo" class="red-bet">ROJO</td>
+                <td colspan="2" id="par" class="group-bet">PAR</td>
+                <td colspan="2" id="19a36" class="group-bet">19-36</td>
+                <td colspan="1" class="empty-cell"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
             
         </div>
 
@@ -198,6 +187,7 @@
 </div>
 
 <script src="/Ruleta.js"></script>
+
 
 
 
