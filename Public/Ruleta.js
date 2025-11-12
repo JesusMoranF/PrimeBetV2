@@ -305,6 +305,3 @@ function dragEnd(e) {
 
     console.log('Sistema de ruleta inicializado correctamente');
 });
-
-    console.log('✅ Sistema de ruleta inicializado correctamente');
-});
