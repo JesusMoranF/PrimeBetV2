@@ -67,19 +67,19 @@ function generarResultado() {
     };
 }
 
-// --- FUNCIONES DE LÓGICA DE APUESTA PARA MÚLTIPLES FICHAS ---
 
-// Función auxiliar para determinar si un número coincide con una apuesta
+
+
 function esGanadora(apuesta, resultado) {
     const { tipo, valor } = apuesta;
     const { numero, color } = resultado;
 
-    // 1. Apuesta por NÚMERO DIRECTO
+
     if (tipo === 'numero') {
         return numero === valor; 
     }
 
-    // 2. Apuesta por COLOR
+ 
     if (tipo === 'color') {
         return color === valor;
     }
@@ -92,14 +92,14 @@ function esGanadora(apuesta, resultado) {
         if (valor === 'impar') return !esPar;
     }
 
-    // 4. Apuesta por GRUPO (valor: 'bajo' 1-18, 'alto' 19-36)
+ 
     if (tipo === 'grupo') {
         if (numero === 0) return false;
         if (valor === 'bajo' && numero >= 1 && numero <= 18) return true;
         if (valor === 'alto' && numero >= 19 && numero <= 36) return true;
     }
 
-    // 5. Apuesta por DOCENA (valor: 1, 2, 3)
+  
     if (tipo === 'docena') {
         if (numero === 0) return false;
         if (valor === 1 && numero >= 1 && numero <= 12) return true;
@@ -107,7 +107,7 @@ function esGanadora(apuesta, resultado) {
         if (valor === 3 && numero >= 25 && numero <= 36) return true;
     }
 
-    // 6. Apuesta por COLUMNA (valor: 1, 2, 3)
+   
     if (tipo === 'columna') {
         if (numero === 0) return false;
         if (valor === 1 && numero % 3 === 1) return true; // 1, 4, 7...
@@ -118,12 +118,12 @@ function esGanadora(apuesta, resultado) {
     return false;
 }
 
-// Calcula la ganancia NETA (positiva si ganas, negativa si pierdes) de todas las fichas
+
 function calcularGananciasTotales(apuestas, resultado) {
     let gananciaNeta = 0; 
     let detallesTransaccion = [];
 
-    // Pagos (Ratio de GANANCIA, sin incluir la devolución de la apuesta)
+
     const PAGOS = {
         'numero': 35, // 35:1
         'color': 1,   // 1:1
@@ -138,23 +138,23 @@ function calcularGananciasTotales(apuestas, resultado) {
     const detalle = `Apuesta $${apuesta.monto.toLocaleString('es-CL')} a ${apuesta.tipo}: ${apuesta.valor}`;
     
     if (esGanadora(apuesta, resultado)) {
-        // GANANCIA NETA = (Apuesta × Ratio) - solo la ganancia, NO la devolución
+
         const gananciaPura = apuesta.monto * pagoRatio;
-        gananciaNeta += gananciaPura; // ✅ Suma solo la ganancia neta
+        gananciaNeta += gananciaPura;
         detallesTransaccion.push(`${detalle} Gana (+${gananciaPura.toLocaleString('es-CL')})`);
     } else {
-        // PÉRDIDA = -Monto apostado
-        gananciaNeta -= apuesta.monto; // ✅ Resta la apuesta perdida
+
+        gananciaNeta -= apuesta.monto; 
         detallesTransaccion.push(`${detalle} Pierde (-${apuesta.monto.toLocaleString('es-CL')})`);
     }
 });
 
     return {
-        gananciaNeta: gananciaNeta, // Valor neto a sumar al saldo (puede ser negativo)
+        gananciaNeta: gananciaNeta, 
         detalleCompleto: detallesTransaccion.join(' | ') // Historial completo
     };
 }
-// --- FIN FUNCIONES DE LÓGICA DE APUESTA ---
+
 
 app.get('/', (req, res) => res.redirect('Inicio'));
 app.get('/Login', (req, res) => res.render('Login'));
@@ -501,4 +501,5 @@ app.listen(port, () => {
 console.log(`💫 Servidor corriendo en http://localhost:${port}`);
 console.log('🟢 Vistas configuradas en:', path.join(__dirname, '../Frontend'));
 });
+
 
