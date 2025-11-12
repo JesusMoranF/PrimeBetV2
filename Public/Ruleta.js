@@ -162,7 +162,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const fichaVisual = document.createElement('div');
         fichaVisual.className = fichaInfo.tipo === 'allin' ? 'ficha-visual-allin' : 'ficha-visual-normal';
-        fichaVisual.innerText = fichaInfo.tipo === 'allin' ? 'A' : fichaInfo.valor; 
+
+
+        let textoFicha;
+        if (fichaInfo.tipo === 'allin') {
+            textoFicha = 'A';
+        } else if (valorApuesta >= 1000) {
+            textoFicha = (valorApuesta / 1000) + 'k';
+        } else {
+            textoFicha = valorApuesta;
+        }
+        fichaVisual.innerText = textoFicha;
         fichaVisual.dataset.valor = valorApuesta;
         
 
