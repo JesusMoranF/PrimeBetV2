@@ -114,10 +114,49 @@ ul{list-style:none}
 .historial-grid{display:flex;gap:1rem;margin-top:1rem;width:100%}
 .historial-columna{flex:1 1 50%;display:flex;flex-direction:column}
 .historial-columna h3{text-align:center;font-size:1rem;color:var(--color-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:0;margin-bottom:.7rem;padding:0.3rem 0}
-.tabla-apuestas,.tabla-resultados{width:100%;border-collapse:collapse;margin-top:.5rem;table-layout:fixed}
-.tabla-apuestas th:first-child,.tabla-apuestas td:first-child,.tabla-resultados th:first-child,.tabla-resultados td:first-child{width:30px!important;max-width:30px!important;padding-left:0!important;padding-right:0!important}
-.tabla-apuestas th,.tabla-resultados th{padding:.5rem .3rem;font-size:.9rem;height:40px;box-sizing:border-box}
-.tabla-apuestas td,.tabla-resultados td{padding:.5rem .3rem;font-size:.85rem;height:50px;line-height:1.1;white-space:normal;overflow:hidden;text-overflow:ellipsis}
+.tabla-apuestas,.tabla-resultados{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:.5rem;
+    table-layout: auto; /* Cambiado a auto para ajuste de ancho flexible */
+}
+
+/* **ESTO ES LO QUE ESTABA CAUSANDO EL PROBLEMA y fue modificado:** */
+.tabla-apuestas th:first-child,.tabla-apuestas td:first-child,.tabla-resultados th:first-child,.tabla-resultados td:first-child{
+    /* Eliminamos las restricciones de 30px */
+    width: 70% !important; /* Le damos un 70% del espacio para la descripción de la apuesta */
+    max-width: unset !important;
+    padding-left: .5rem !important; /* Añadimos padding */
+    padding-right: .5rem !important;
+    text-align: left; /* Alineamos el texto de la apuesta a la izquierda */
+}
+/* La segunda columna (Neto) ocupará automáticamente el 30% restante */
+
+
+.tabla-apuestas th,.tabla-resultados th{
+    padding: .75rem .5rem; /* Aumento de padding en encabezados para más espacio */
+    font-size:.95rem; /* Fuente un poco más grande para mejor lectura */
+    height:auto;
+    box-sizing:border-box;
+    white-space: nowrap; /* Mantiene el texto del encabezado en una línea (útil si pones "Apuesta") */
+}
+
+.tabla-apuestas td,.tabla-resultados td{
+    padding: .7rem .5rem; /* Aumento de padding en celdas de datos */
+    font-size:.9rem; /* Fuente un poco más grande para mejor lectura */
+    height:auto; /* Permite que la altura crezca si el texto es muy largo */
+    line-height:1.3; /* Aumenta el interlineado para evitar que el texto se vea apelmazado */
+    white-space: normal; /* Permite que el texto se envuelva si es necesario */
+    overflow:hidden;
+    text-overflow:ellipsis;
+    text-align: center; /* Alineación del contenido del neto */
+}
+.tabla-apuestas td:first-child {
+    text-align: left; /* Asegura que la descripción de la apuesta se alinee a la izquierda */
+    font-weight: 500;
+    color: var(--color-text); /* Hace que el texto de la apuesta sea más visible */
+}
+
 .apuesta-estado.success{color:var(--color-success)!important;font-weight:700}
 .apuesta-estado.danger{color:var(--color-danger)!important;font-weight:700}
 .resultado-numero.color-rojo{color:var(--color-danger)!important;background:rgba(217,4,41,.2);border:1px solid var(--color-danger);border-radius:var(--radius-xs)}
