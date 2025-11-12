@@ -115,10 +115,14 @@ ul{list-style:none}
 .historial-columna{flex:1 1 50%;display:flex;flex-direction:column}
 .historial-columna h3{text-align:center;font-size:1rem;color:var(--color-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:0;margin-bottom:.7rem;padding:0.3rem 0}
 .tabla-apuestas,.tabla-resultados{width:100%;border-collapse:collapse;margin-top:.5rem;table-layout:auto}
-.tabla-apuestas th:first-child,.tabla-resultados th:first-child{width:40px!important;min-width:40px!important;padding:0.6rem 0.4rem!important;text-align:center!important}
-.tabla-apuestas th:nth-child(2),.tabla-resultados th:nth-child(2){padding:0.6rem 0.5rem!important;text-align:left!important}
-.tabla-apuestas td:first-child,.tabla-resultados td:first-child{width:40px!important;min-width:40px!important;padding:0.6rem 0.4rem!important;text-align:center!important;font-size:0.85rem!important}
-.tabla-apuestas td:nth-child(2),.tabla-resultados td:nth-child(2){padding:0.7rem 0.5rem!important;text-align:left!important;line-height:1.4!important}
+.tabla-apuestas th:first-child{width:35px!important;min-width:35px!important;padding:0.5rem 0.2rem!important;text-align:center!important;font-size:0.75rem!important}
+.tabla-apuestas th:nth-child(2){width:65%!important;padding:0.5rem 0.3rem!important;text-align:left!important}
+.tabla-resultados th:first-child{width:35px!important;min-width:35px!important;padding:0.5rem 0.2rem!important;text-align:center!important}
+.tabla-resultados th:nth-child(2){padding:0.5rem 0.3rem!important;text-align:center!important}
+.tabla-apuestas td:first-child{width:35px!important;min-width:35px!important;padding:0.5rem 0.2rem!important;text-align:center!important;font-size:0.8rem!important}
+.tabla-apuestas td:nth-child(2){width:65%!important;padding:0.6rem 0.3rem!important;text-align:left!important;line-height:1.3!important;font-size:0.75rem!important}
+.tabla-resultados td:first-child{width:35px!important;min-width:35px!important;padding:0.5rem 0.2rem!important;text-align:center!important;font-size:0.8rem!important}
+.tabla-resultados td:nth-child(2){padding:0.6rem 0.3rem!important;text-align:center!important;line-height:1.3!important}
 .tabla-apuestas th,.tabla-resultados th{padding:.6rem .4rem;font-size:.85rem;height:auto;box-sizing:border-box}
 .tabla-apuestas td,.tabla-resultados td{padding:.7rem .4rem;font-size:.8rem;height:auto;min-height:50px;line-height:1.3;word-wrap:break-word;white-space:normal;vertical-align:middle}
 .apuesta-estado{display:block;font-size:0.8rem!important;line-height:1.4!important;word-wrap:break-word!important;white-space:normal!important;max-width:100%;overflow-wrap:break-word}
