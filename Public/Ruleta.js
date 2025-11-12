@@ -1,16 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- ELEMENTOS DEL JUEGO ---
     const ruletaImg = document.querySelector('.ruleta-imagen-pequena');
     const spinButton = document.querySelector('.btn-spin');
     const statusText = document.getElementById('estado-apuesta');
     const fichas = document.querySelectorAll('.ficha-mejorada, .ficha-compacta');
-    const tapeteRuleta = document.getElementById('tapete-ruleta'); // ✅ CAMBIO: Usar la tabla directamente
+    const tapeteRuleta = document.getElementById('tapete-ruleta'); 
 
-    // El orden de los números en la ruleta europea (para calcular la posición final)
+ 
     const ruletaNumbers = [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26];
     
-    // --- ESTADO Y MAPEO ---
     
     const MAPEO_APUESTAS = {
         'n0': { tipo: 'numero', valor: 0 }, 'n1': { tipo: 'numero', valor: 1 }, 'n2': { tipo: 'numero', valor: 2 }, 'n3': { tipo: 'numero', valor: 3 }, 'n4': { tipo: 'numero', valor: 4 }, 
@@ -30,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let apuestasActuales = {};
 
-    // --- UTILERÍAS ---
     
     function obtenerDinero() {
     const dineroTexto = document.getElementById('dinero-disponible').textContent.replace('$', '').trim();
@@ -57,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         apuestasActuales = {}; 
     }
     
-    // --- DRAG AND DROP HANDLERS ---
+
     
     function dragStart(e) {
     const fichaContainer = e.target.closest('.ficha-mejorada, .ficha-compacta');
