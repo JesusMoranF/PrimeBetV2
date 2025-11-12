@@ -503,5 +503,3 @@ app.listen(port, () => {
 console.log(`Servidor corriendo en http://localhost:${port}`);
 console.log('Vistas configuradas en:', path.join(__dirname, '../Frontend'));
 });
-
-
