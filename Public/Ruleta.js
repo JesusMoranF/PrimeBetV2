@@ -33,10 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- UTILERÍAS ---
     
     function obtenerDinero() {
-        const dineroTexto = document.getElementById('dinero-disponible').textContent.replace('$', '').trim();
-        const dineroLimpio = dineroTexto.replace(/\./g, '').replace(',', '.'); 
-        return Number(dineroLimpio); 
-    }
+    const dineroTexto = document.getElementById('dinero-disponible').textContent.replace('$', '').trim();
+    const dineroLimpio = dineroTexto.replace(/\./g, '').replace(',', '.').replace('US', ''); 
+    const numero = Number(dineroLimpio);
+    return isNaN(numero) ? 0 : numero; // ✅ Protección contra NaN
+}
 
     function actualizarDinero(nuevoMonto) {
         const formatter = new Intl.NumberFormat('es-CL', {
