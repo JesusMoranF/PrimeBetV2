@@ -358,15 +358,16 @@ app.post('/apuesta', async (req, res) => {
         await usuario.save();
 
         res.json({
-            success: true,
-            resultado: {
-                numero: resultado.numero,
-                color: resultado.color
-            },
-            gananciaNeta: gananciaNeta,
-            saldo: nuevoSaldo.toLocaleString('es-CL'),
-            detalle: detalleCompleto
-        });
+    success: true,
+    resultado: {
+        numero: resultado.numero,
+        color: resultado.color
+    },
+    gananciaNeta: gananciaNeta,
+    saldo: nuevoSaldo.toLocaleString('es-CL'),
+    nuevoSaldo: nuevoSaldo,
+    detalle: detalleCompleto
+});
 
     } catch (err) {
         console.error('Error al procesar la apuesta:', err);
@@ -503,3 +504,4 @@ app.listen(port, () => {
 console.log(`Servidor corriendo en http://localhost:${port}`);
 console.log('Vistas configuradas en:', path.join(__dirname, '../Frontend'));
 });
+
