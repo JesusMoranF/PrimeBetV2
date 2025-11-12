@@ -305,59 +305,29 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.nuevoSaldo !== undefined) {
             actualizarDinero(data.nuevoSaldo);
         }
+
         const tablaResultados = document.querySelector('.tabla-resultados tbody');
         if (tablaResultados && data.resultado) {
             const colorClass = data.resultado.color === 'rojo' ? 'color-rojo' : 
                               data.resultado.color === 'verde' ? 'color-verde' : 'color-negro';
-
+            
             const nuevaFila = document.createElement('tr');
-            nuevaFila.innerHTML = 
+            nuevaFila.innerHTML = `
                 <td>0</td>
                 <td class="resultado-numero ${colorClass}">${data.resultado.numero}</td>
-            ;
+            `;
             tablaResultados.insertBefore(nuevaFila, tablaResultados.firstChild);
+            
 
             while (tablaResultados.children.length > 5) {
                 tablaResultados.removeChild(tablaResultados.lastChild);
             }
+            
 
             Array.from(tablaResultados.children).forEach((fila, idx) => {
                 fila.children[0].textContent = idx;
             });
         }
-
-    const tablaApuestas = document.querySelector('.tabla-apuestas tbody');
-    if (tablaApuestas && data.detalle) {
-        const colorClass = data.gananciaNeta >= 0 ? 'success' : 'danger';
-        const signo = data.gananciaNeta >= 0 ? '+' : '';
-        const estado = data.gananciaNeta >= 0 ? 'GANÓ' : 'PERDIÓ';
-        
-        const nuevaFila = document.createElement('tr');
-        nuevaFila.innerHTML = `
-            <td>0</td>
-            <td class="apuesta-estado ${colorClass}">
-                ${data.detalle} <strong>(${estado}: ${signo}$${Math.abs(data.gananciaNeta).toLocaleString('es-CL')})</strong>
-            </td>
-        `;
-        
-        nuevaFila.style.backgroundColor = 'rgba(255, 183, 3, 0.2)';
-        setTimeout(() => {
-            nuevaFila.style.backgroundColor = '';
-        }, 1000);
-        
-        tablaApuestas.insertBefore(nuevaFila, tablaApuestas.firstChild);
-        
-        while (tablaApuestas.children.length > 5) {
-            tablaApuestas.removeChild(tablaApuestas.lastChild);
-        }
-        
-        Array.from(tablaApuestas.children).forEach((fila, idx) => {
-            fila.children[0].textContent = idx;
-        });
-    }
-    
-    console.log(' Historial actualizado');
-}
 
 
         const tablaApuestas = document.querySelector('.tabla-apuestas tbody');
