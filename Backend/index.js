@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-mongoose.connect('mongodb+srv://ruletadiego:diegochristianjesus@cluster0.n28spxy.mongodb.net/?appName=Cluster0')
+mongoose.connect('mongodb+srv://admin:admin123@cluster0.bmquzzo.mongodb.net/?appName=Cluster0')
 .then(() => console.log('Conexión exitosa a MongoDB Atlas'))
 .catch(err => console.error('Error conectando a MongoDB:', err));
 
@@ -504,4 +504,5 @@ app.listen(port, () => {
 console.log(`Servidor corriendo en http://localhost:${port}`);
 console.log('Vistas configuradas en:', path.join(__dirname, '../Frontend'));
 });
+
 
